@@ -14,9 +14,41 @@ datasource db {
 }
 
 model User {
-    id String @id @default(cuid())
-    email String @unique
-    password String
-    name String
-    created_at DateTime @default(now())
+  id         String   @id @default(cuid())
+  email      String   @unique
+  password   String
+  name       String
+  created_at DateTime @default(now())
+  Task       Task[]
+  Child      Child[]
+}
+
+model Task {
+  id             String           @id @default(cuid())
+  display_name   String
+  iconEmoji      String
+  bg_color       String
+  user_id        String
+  created_at     DateTime         @default(now())
+  reward         Int
+  user           User             @relation(fields: [user_id], references: [id])
+  TaskCompletion TaskCompletion[]
+}
+
+model Child {
+  id             String           @id @default(cuid())
+  name           String
+  linked_user_id String
+  created_at     DateTime         @default(now())
+  user           User             @relation(fields: [linked_user_id], references: [id])
+  TaskCompletion TaskCompletion[]
+}
+
+model TaskCompletion {
+  id           String   @id @default(cuid())
+  task_id      String
+  child_id     String
+  registerd_at DateTime @default(now())
+  task         Task     @relation(fields: [task_id], references: [id])
+  child        Child    @relation(fields: [child_id], references: [id])
 }
