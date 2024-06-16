@@ -2,9 +2,9 @@
     "compilerOptions": {
         "baseUrl": "src",
         "paths": {
-            "@src/*": ["./src/*"],
-            "@routers/*": ["./src/routers/*"],
-            "@middlewares/*": ["./src/routers/middlewares/*"],
+            "@src/*": ["./*"],
+            "@routers/*": ["./routers/*"],
+            "@middlewares/*": ["./routers/middlewares/*"],
         }
     }
 }
