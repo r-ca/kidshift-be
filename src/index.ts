@@ -3,6 +3,7 @@ import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
 import prisma from "@src/prisma";
 import os from "os";
+import { getCommitHash } from "@utils/gitCommitHash";
 
 
 const app = express();
@@ -33,6 +34,7 @@ console.log("    Platform: " + os.platform());
 console.log("  Software:");
 console.log("    Node.js: " + process.versions.node);
 console.log("    V8: " + process.versions.v8);
+console.log("    CommitHash: " + await getCommitHash());
 console.log("  Configuration:");
 console.log("    Port: " + port);
 
