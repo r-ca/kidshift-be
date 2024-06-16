@@ -1,4 +1,3 @@
-import { Prisma, PrismaClient, User } from "@prisma/client";
 import prisma from "@src/prisma";
 import bcrypt from "bcrypt";
 import { issueTokenByUserId } from "@src/utils/tokenUtils";
@@ -7,7 +6,7 @@ async function registUser(email: string, password: string): Promise<String> {
     
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    const registUser = prisma.user.create({ // TODO: バリデーション, ハッシュ化, その他
+    const registUser = prisma.user.create({ // TODO: emailバリデーション
         data: {
             email,
             password: hashedPassword,
