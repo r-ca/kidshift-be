@@ -49,8 +49,11 @@ app.get("/", (req, res) => {
 });
 
 app.use(express.json());
+logger.info("JSON parser enabled");
+
 app.use('/debug', debugRouter);
 app.use('/auth', authRouter);
+logger.info("Routers mounted");
 
 app.listen(port, () => {
     logger.info(`Server started! Listening on port ${port}`);
