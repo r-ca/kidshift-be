@@ -22,12 +22,17 @@ router.post('/register', (req: Request, res: Response) => {
 router.post('/login', (req: Request, res: Response) => {
     const { email, password } = req.body;
     loginUser(email, password)
-        .then((user) => {
-            res.json(user);
+        .then((token) => {
+            if(token) {
+                res.json({ token });
+            } else {
+                res.status(401).json({ message: "ログイン失敗: emailかpasswordが間違っています" });
+                logger.warn("Login failed");
+            }
         })
         .catch((err) => {
-            res.status(401).json({ message: "ログイン失敗: emailかpasswordが間違っています" });
-            logger.warn("Login failed");
+            res.status(500).json({ message: "ログイン失敗: サーバーエラー" });
+            logger.error("Login failed");
             logger.debug(err.message);
         });
 });
