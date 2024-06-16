@@ -1,7 +1,6 @@
 import express from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
-import path from "path";
 
 const app = express();
 const port = 3000;
