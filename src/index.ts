@@ -4,6 +4,7 @@ import debugRouter from "@src/routers/debugRouter";
 import prisma from "@src/prisma";
 import os from "os";
 import { getCommitHash } from "@utils/gitCommitHash";
+import authRouter from "@src/routers/authRouter";
 
 
 const app = express();
@@ -49,7 +50,7 @@ app.get("/", (req, res) => {
 
 app.use(express.json());
 app.use('/debug', debugRouter);
-
+app.use('/auth', authRouter);
 
 app.listen(port, () => {
     logger.info(`Server started! Listening on port ${port}`);

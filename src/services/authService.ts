@@ -9,3 +9,6 @@ function registUser(email: string, password: string) {
         }
     });
 }
+
+
+export { registUser };
