@@ -1,6 +1,7 @@
+import { PrismaPromise, Task } from "@prisma/client";
 import prisma from "@src/prisma";
 
-function getTasksByUserId(userId: string) {
+function getTasksByUserId(userId: string): PrismaPromise<Task[]> {
     return prisma.task.findMany({
         where: {
             user_id: {
@@ -10,7 +11,7 @@ function getTasksByUserId(userId: string) {
     });
 }
 
-function getTasksByChildId(childId: string) {
+function getTasksByChildId(childId: string): PrismaPromise<Task[]> {
     return prisma.task.findMany({
         where: {
             child_id: {
@@ -19,3 +20,5 @@ function getTasksByChildId(childId: string) {
         }
     });
 }
+
+export { getTasksByUserId, getTasksByChildId };
