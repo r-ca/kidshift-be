@@ -5,7 +5,7 @@
             "@src/*": ["./*"],
             "@routers/*": ["./routers/*"],
             "@middlewares/*": ["./routers/middlewares/*"],
-            "@utis/*": ["./utis/*"],
+            "@utils/*": ["./utils/*"],
         }
     }
 }
