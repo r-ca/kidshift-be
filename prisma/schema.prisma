@@ -29,9 +29,11 @@ model Task {
   iconEmoji      String
   bg_color       String
   user_id        String
+  child_id       String
   created_at     DateTime         @default(now())
   reward         Int
   user           User             @relation(fields: [user_id], references: [id])
+  child          Child            @relation(fields: [child_id], references: [id])
   TaskCompletion TaskCompletion[]
 }
 
@@ -42,6 +44,7 @@ model Child {
   created_at     DateTime         @default(now())
   user           User             @relation(fields: [linked_user_id], references: [id])
   TaskCompletion TaskCompletion[]
+  Task           Task[]
 }
 
 model TaskCompletion {
