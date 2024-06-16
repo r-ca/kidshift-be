@@ -1,11 +1,10 @@
 import express from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
-import prisma from "@src/prisma";
 import os from "os";
 import { getCommitHash } from "@utils/gitCommitHash";
 import authRouter from "@src/routers/authRouter";
-
+import { Response } from 'express';
 
 const app = express();
 const port = 3000;
@@ -44,7 +43,7 @@ console.log("\n");
 
 logger.info("Starting server...");
 
-app.get("/", (req, res) => {
+app.get("/", (res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
 
