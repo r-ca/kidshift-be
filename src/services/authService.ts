@@ -36,4 +36,4 @@ async function loginUser(email: string, password: string): Promise<String | null
 }
 
 
-export { registUser };
+export { registUser, loginUser };
