@@ -2,7 +2,7 @@ import express from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
 import os from "os";
-import { getCommitHash } from "@utils/gitCommitHash";
+import { getCommitHash } from "@utils/gitMeta";
 import authRouter from "@src/routers/authRouter";
 import taskRouter from "@src/routers/taskRouter";
 import { Response, Request } from 'express';
