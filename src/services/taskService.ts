@@ -21,4 +21,10 @@ function getTasksByChildId(childId: string): PrismaPromise<Task[]> {
     });
 }
 
-export { getTasksByUserId, getTasksByChildId };
+function createTask(task: Task): PrismaPromise<Task> {
+    return prisma.task.create({ // TODO: Validate task
+        data: task
+    });
+}
+
+export { getTasksByUserId, getTasksByChildId, createTask }
