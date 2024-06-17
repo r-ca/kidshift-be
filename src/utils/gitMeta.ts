@@ -33,4 +33,15 @@ function getCommitDate() {
     });
 }
 
-export { getCommitHash, getCommitMessage, getCommitDate }
+function getBranchName() {
+    return new Promise((resolve) => {
+        exec('git rev-parse --abbrev-ref HEAD', (err, stdout) => {
+            if (err) {
+            resolve('Something went wrong');
+            }
+            resolve(stdout.trim());
+        });
+    });
+}
+
+export { getCommitHash, getCommitMessage, getCommitDate, getBranchName }
