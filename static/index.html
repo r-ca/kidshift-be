@@ -44,15 +44,23 @@
             fetch(location.href + 'meta/ping')
                 .then(res => res.text())
                 .then(text => {
-                    document.querySelector('#lastChecked').textContent = new Date().toLocaleTimeString();
                     if (text === 'pong') {
                         document.querySelector('#stateStr').textContent = '✅ Server is running!';
                         document.querySelector('#catIcon').textContent = '✅';
-                    } else {
-                        document.querySelector('#stateStr').textContent = '❌ Server is down!';
-                        document.querySelector('#catIcon').textContent = '❌';
+                    } else { // Unknow response (? emoji
+                        document.querySelector('#stateStr').textContent = '❓ Server is responding but unknown!';
+                        document.querySelector('#stateStr').append(document.createElement('br'));
+                        document.querySelector('#stateStr').append(document.createTextNode('Response: ' + text));
+                        document.querySelector('#stateStr').style.color = '#333';
+                        document.querySelector('#catIcon').textContent = '❓';
+                                            
                     }
-                                        
+                }).catch(err => {
+                    document.querySelector('#stateStr').textContent = '❌ Server is down!';
+                    document.querySelector('#catIcon').textContent = '❌';
+                }).finally(() => {
+                    const now = new Date();
+                    document.querySelector('#lastChecked').textContent = now.toLocaleTimeString();
                 });
         }, 1000 * 1);
 
@@ -97,7 +105,8 @@
         <!-- divider -->
         <div style="margin: 20px 0; border-bottom: 1px solid #ccc;"></div>
         <!-- 以下の情報は実行環境の現状であって，稼働しているバージョンのことを指すとは限らないことを忠告 -->
-        <p style="font-size: 0.6em; color: gray">The information below is about the current environment, not necessarily the version running.</p>
+        <p style="font-size: 0.6em; color: gray">The information below is about the current environment, not necessarily
+            the version running.</p>
 
     </main>
 </body>
