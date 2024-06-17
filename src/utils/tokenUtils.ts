@@ -7,7 +7,7 @@ function issueToken(payload: object) {
 
 function issueTokenByUserId(userId: string) {
     const payload = {
-        userId: userId,
+        sub: userId,
         role: Role.PARENT
     };
 
