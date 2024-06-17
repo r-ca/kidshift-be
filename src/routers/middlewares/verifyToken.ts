@@ -1,5 +1,6 @@
 import jsonwebtoken from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { assert } from "console";
 
 export default function verifyToken(req: Request, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers["authorization"];
@@ -16,6 +17,7 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
     }
     try {
         jsonwebtoken.verify(token, "secret"); // TODO: ハードコードやめる
+        req.user = { token, claims: jsonwebtoken.decode(token) };
         next();
     } catch (error) {
         return res.status(401).send("アクセス拒否: トークンの検証に失敗しました(有効期限切れか、不正なトークンです)");
