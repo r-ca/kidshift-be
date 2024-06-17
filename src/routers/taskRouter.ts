@@ -51,4 +51,13 @@ router.get('/', (req, res) => {
     }
 });
 
-
+router.post('/', (req, res) => {
+    const body = req.body;
+    if (!body) {
+        res.status(400).json({
+            message: '不正なリクエスト: リクエストボディが空です'
+        });
+        return;
+    }
+    // TODO: implement
+});
