@@ -6,7 +6,7 @@
         "strict": true,
         "moduleResolution": "node",
         "esModuleInterop": true,
-        "typeRoots": ["./node_modules/@types", "./types"],
+        "typeRoots": ["./node_modules/@types", "./src/types"],
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
     },
