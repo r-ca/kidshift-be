@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Task } from '@prisma/client';
-import { createTask, getTasks, getTasksByChild } from '@src/services/taskService';
+import { createTask, getTasks, getTasksByChild, updateTask, deleteTask } from '@src/services/taskService';
 
 const router = Router();
 
@@ -70,6 +70,27 @@ router.post('/', (req, res) => {
                 });
             });
     }
+});
+
+router.put('/:taskId', (req, res) => {
+    res.status(501).json({
+        message: 'WIP'
+    });
+});
+
+router.delete('/:taskId', (req, res) => {
+    deleteTask(req.params.taskId)
+        .then(() => {
+            res.status(200).json({
+                message: 'OK',
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: 'エラーが発生しました',
+                error: err
+            });
+        });
 });
 
 export default router;
