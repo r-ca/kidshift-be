@@ -7,6 +7,9 @@ import authRouter from "@src/routers/authRouter";
 import taskRouter from "@src/routers/taskRouter";
 import metaRouter from "@src/routers/metaRouter";
 import { Response, Request } from 'express';
+// Swagger
+import swaggerUi from 'swagger-ui-express';
+import swaggerJSDoc from 'swagger-jsdoc';
 
 const app = express();
 const port = 3000;
@@ -49,6 +52,17 @@ logger.info("Starting server...");
 app.get("/", (_req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
+
+const options = {
+    swaggerDefinition: {
+        info: {
+            title: 'KidShift API',
+            version: '1.0.0'
+        },
+    },
+    apis: ['./src/routers/*.ts'],
+};
+app.get('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(options)));
 
 app.use(express.json());
 logger.info("JSON parser enabled");
