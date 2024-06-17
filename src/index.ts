@@ -1,11 +1,9 @@
 import express from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/parent/debugRouter";
+import parentRouter from "@src/routers/parent";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
-import authRouter from "@src/routers/parent/authRouter";
-import taskRouter from "@src/routers/parent/taskRouter";
-import metaRouter from "@src/routers/parent/metaRouter";
 import { Response, Request, Router } from 'express';
 // Swagger
 import swaggerUi from 'swagger-ui-express';
@@ -72,10 +70,8 @@ logger.info("Swagger enabled and mounted at /docs");
 app.use(express.json());
 logger.info("JSON parser enabled");
 
+app.use('/parent', parentRouter);
 app.use('/debug', debugRouter);
-app.use('/auth', authRouter);
-app.use('/task', taskRouter);
-app.use('/meta', metaRouter);
 logger.info("Routers mounted");
 
 app.listen(port, () => {
