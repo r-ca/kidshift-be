@@ -54,7 +54,7 @@
                     }
                                         
                 });
-        }, 1000 * 10);
+        }, 1000 * 1);
 
         // get meta data from server ('/meta') and display it
         function getMeta() {
@@ -64,9 +64,12 @@
                     const ul = document.createElement('ul');
                     Object.entries(meta).forEach(([key, value]) => {
                         const li = document.createElement('li');
-                        li.textContent = `${key}: ${value}`;
+                        li.textContent = `${key}: ${value}`
                         ul.appendChild(li);
                     });
+                    ul.style.textAlign = 'left';
+                    ul.style.width = 'fit-content';
+                    ul.style.margin = '20px auto';
                     document.querySelector('main').appendChild(ul);
                 });
         }
