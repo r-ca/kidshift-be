@@ -43,7 +43,7 @@ console.log("\n");
 
 logger.info("Starting server...");
 
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
 
