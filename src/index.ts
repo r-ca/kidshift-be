@@ -52,6 +52,7 @@ logger.info("Starting server...");
 app.get("/", (_req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
+logger.info("Index page mounted");
 
 const options = {
     swaggerDefinition: {
@@ -62,11 +63,11 @@ const options = {
     },
     apis: ['./src/routers/*.ts'],
 };
-
 const swaggerRouter = Router();
 swaggerRouter.use('/', swaggerUi.serve);
 swaggerRouter.get('/', swaggerUi.setup(swaggerJSDoc(options)));
 app.use('/docs', swaggerRouter);
+logger.info("Swagger enabled and mounted at /docs");
 
 app.use(express.json());
 logger.info("JSON parser enabled");
