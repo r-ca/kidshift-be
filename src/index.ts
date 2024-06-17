@@ -66,7 +66,7 @@ const options = {
 const swaggerRouter = Router();
 swaggerRouter.use('/', swaggerUi.serve);
 swaggerRouter.get('/', swaggerUi.setup(swaggerJSDoc(options)));
-app.use('/api-docs', swaggerRouter);
+app.use('/docs', swaggerRouter);
 
 app.use(express.json());
 logger.info("JSON parser enabled");
