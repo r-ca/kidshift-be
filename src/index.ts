@@ -4,7 +4,7 @@ import debugRouter from "@src/routers/debugRouter";
 import os from "os";
 import { getCommitHash } from "@utils/gitCommitHash";
 import authRouter from "@src/routers/authRouter";
-import { Response } from 'express';
+import { Response, Request } from 'express';
 
 const app = express();
 const port = 3000;
@@ -43,7 +43,7 @@ console.log("\n");
 
 logger.info("Starting server...");
 
-app.get("/", (res: Response) => {
+app.get("/", (req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
 
