@@ -41,7 +41,7 @@ router.post('/', (req, res) => {
     }
     if (!body.displayName || !body.reward) {
         res.status(400).json({
-            message: '不正なリクエスト: child_id, user_id, title, descriptionは必須です'
+            message: '不正なリクエスト: displayName, rewardは必須です'
         });
         return;
     } else {
