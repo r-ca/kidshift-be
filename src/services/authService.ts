@@ -10,7 +10,7 @@ async function registUser(email: string, password: string): Promise<String> {
         data: {
             email,
             password: hashedPassword,
-            name: email,
+            display_name: email,
         }
     });
 
