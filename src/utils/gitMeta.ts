@@ -11,4 +11,26 @@ function getCommitHash() {
   });
 }
 
-export { getCommitHash };
+function getCommitMessage() {
+    return new Promise((resolve) => {
+        exec('git log -1 --pretty=%B', (err, stdout) => {
+            if (err) {
+            resolve('Something went wrong');
+            }
+            resolve(stdout.trim());
+        });
+    });
+}
+
+function getCommitDate() {
+    return new Promise((resolve) => {
+        exec('git log -1 --pretty=%cd', (err, stdout) => {
+            if (err) {
+            resolve('Something went wrong');
+            }
+            resolve(stdout.trim());
+        });
+    });
+}
+
+export { getCommitHash, getCommitMessage, getCommitDate }
