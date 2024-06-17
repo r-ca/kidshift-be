@@ -3,6 +3,7 @@ import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
 import metaRouter from "@src/routers/metaRouter";
 import parentRouter from "@src/routers/parent";
+import childRouter from "@src/routers/child";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import { Response, Request, Router } from 'express';
@@ -72,6 +73,7 @@ app.use(express.json());
 logger.info("JSON parser enabled");
 
 app.use('/parent', parentRouter);
+app.use('/child', childRouter);
 app.use('/debug', debugRouter);
 app.use('/meta', metaRouter);
 logger.info("Routers mounted");
