@@ -7,12 +7,12 @@ router.get('/ping', (req: Request, res: Response) => {
     res.send('pong');
 });
 
-router.get('/' , (req: Request, res: Response) => {
+router.get('/' , async (req: Request, res: Response) => {
     res.json({
-        "commitHash": getCommitHash(),
-        "branchName": getBranchName(),
-        "commitDate": getCommitDate(),
-        "commitMessage": getCommitMessage()
+        "commitHash": await getCommitHash(),
+        "branchName": await getBranchName(),
+        "commitDate": await getCommitDate(),
+        "commitMessage": await getCommitMessage()
     });
 });
 
