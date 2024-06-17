@@ -1,6 +1,5 @@
 import jsonwebtoken from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
-import { assert } from "console";
 
 export default function verifyToken(req: Request, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers["authorization"];

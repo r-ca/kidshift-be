@@ -1,4 +1,3 @@
-import jsonwebtoken from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
 import { Role } from "@src/enums";
 
