@@ -30,6 +30,7 @@ model HomeGroup {
   created_at DateTime @default(now())
   User       User[]
   Child      Child[]
+  Task       Task[]
 }
 
 model Task {
@@ -37,7 +38,8 @@ model Task {
   display_name   String
   iconEmoji      String
   bg_color       String
-  user_id        String
+  home_group_id  String
+  home_group     HomeGroup        @relation(fields: [home_group_id], references: [id])
   created_at     DateTime         @default(now())
   reward         Int
   TaskCompletion TaskCompletion[]
