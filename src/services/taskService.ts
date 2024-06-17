@@ -34,4 +34,22 @@ function createTask(task: Task): PrismaPromise<Task> {
     });
 }
 
-export { getTasks, createTask, getTasksByChild }
+function deleteTask(taskId: string): PrismaPromise<Task> {
+    return prisma.task.delete({
+        where: {
+            id: taskId
+        }
+    });
+}
+
+// PUT
+function updateTask(task: Task): PrismaPromise<Task> {
+    return prisma.task.update({
+        where: {
+            id: task.id
+        },
+        data: task
+    });
+}
+
+export { getTasks, createTask, getTasksByChild, updateTask, deleteTask }
