@@ -1,11 +1,11 @@
 import express from "express";
 import Logger from "@src/logger";
-import debugRouter from "@src/routers/debugRouter";
+import debugRouter from "@src/routers/parent/debugRouter";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
-import authRouter from "@src/routers/authRouter";
-import taskRouter from "@src/routers/taskRouter";
-import metaRouter from "@src/routers/metaRouter";
+import authRouter from "@src/routers/parent/authRouter";
+import taskRouter from "@src/routers/parent/taskRouter";
+import metaRouter from "@src/routers/parent/metaRouter";
 import { Response, Request, Router } from 'express';
 // Swagger
 import swaggerUi from 'swagger-ui-express';
