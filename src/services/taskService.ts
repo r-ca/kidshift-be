@@ -28,6 +28,14 @@ function getTasksByChild(childId: string): PrismaPromise<Task[]> {
     });
 }
 
+function getTask(taskId: string): PrismaPromise<Task | null> {
+    return prisma.task.findUnique({
+        where: {
+            id: taskId
+        }
+    });
+}
+
 function createTask(task: Task): PrismaPromise<Task> {
     return prisma.task.create({ // TODO: Validate task
         data: task
@@ -52,4 +60,4 @@ function updateTask(task: Task): PrismaPromise<Task> {
     });
 }
 
-export { getTasks, createTask, getTasksByChild, updateTask, deleteTask }
+export { getTask, getTasks, createTask, getTasksByChild, updateTask, deleteTask }
