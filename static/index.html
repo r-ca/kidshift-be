@@ -38,6 +38,41 @@
             padding: 0;
         }
     </style>
+    <script>
+        // send ping to server every 30 seconds and update the last checked time
+        setInterval(() => {
+            fetch(location.href + 'meta/ping')
+                .then(res => res.text())
+                .then(text => {
+                    document.querySelector('#lastChecked').textContent = new Date().toLocaleTimeString();
+                    if (text === 'pong') {
+                        document.querySelector('#stateStr').textContent = '✅ Server is running!';
+                        document.querySelector('#catIcon').textContent = '✅';
+                    } else {
+                        document.querySelector('#stateStr').textContent = '❌ Server is down!';
+                        document.querySelector('#catIcon').textContent = '❌';
+                    }
+                                        
+                });
+        }, 1000 * 1);
+
+        // get meta data from server ('/meta') and display it
+        function getMeta() {
+            fetch('/meta')
+                .then(res => res.json())
+                .then(meta => {
+                    const ul = document.createElement('ul');
+                    Object.entries(meta).forEach(([key, value]) => {
+                        const li = document.createElement('li');
+                        li.textContent = `${key}: ${value}`;
+                        ul.appendChild(li);
+                    });
+                    document.querySelector('main').appendChild(ul);
+                });
+        }
+
+        getMeta();
+    </script>
 </head>
 
 <body>
@@ -46,15 +81,21 @@
     </header>
     <main>
 
-        <h2> ✅ Server is running! </h2>
-        <br>
+        <h2 id="stateStr"> ✅ Server is running! </h2>
+        <h3> Last checked: <span id="lastChecked"></h3>
         <p>
-             A____A<br>
+            A____A<br>
             |・ㅅ・|<br>
-            |っ✅ｃ|<br>
+            |っ<span id="catIcon">✅</span>ｃ|<br>
             |　　　|<br>
-             U￣￣U<br>
+            U￣￣U<br>
         </p>
+
+        <!-- divider -->
+        <div style="margin: 20px 0; border-bottom: 1px solid #ccc;"></div>
+        <!-- 以下の情報は実行環境の現状であって，稼働しているバージョンのことを指すとは限らないことを忠告 -->
+        <p style="font-size: 0.6em; color: gray">The information below is about the current environment, not necessarily the version running.</p>
+
     </main>
 </body>
 
