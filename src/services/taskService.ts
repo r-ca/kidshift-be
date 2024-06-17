@@ -1,4 +1,4 @@
-import { PrismaPromise, Task } from "@prisma/client";
+import { PrismaPromise, Task, TaskCompletion } from "@prisma/client";
 import prisma from "@src/prisma";
 
 function getTasks(homeGroupId: string): PrismaPromise<Task[]> {
@@ -60,4 +60,14 @@ function updateTask(task: Task): PrismaPromise<Task> {
     });
 }
 
-export { getTask, getTasks, createTask, getTasksByChild, updateTask, deleteTask }
+// 完了を登録
+function registCompleteTask(taskId: string, childId: string): PrismaPromise<TaskCompletion> {
+    return prisma.taskCompletion.create({
+        data: {
+            task_id: taskId,
+            child_id: childId
+        }
+    });
+}
+
+export { getTask, getTasks, createTask, getTasksByChild, updateTask, deleteTask, registCompleteTask }
