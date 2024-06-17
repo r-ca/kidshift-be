@@ -53,7 +53,6 @@
                         document.querySelector('#stateStr').append(document.createTextNode('Response: ' + text));
                         document.querySelector('#stateStr').style.color = '#333';
                         document.querySelector('#catIcon').textContent = '❓';
-                                            
                     }
                 }).catch(err => {
                     document.querySelector('#stateStr').textContent = '❌ Server is down!';
@@ -81,7 +80,6 @@
                     document.querySelector('main').appendChild(ul);
                 });
         }
-
         getMeta();
     </script>
 </head>
