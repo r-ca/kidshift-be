@@ -2,9 +2,10 @@ import express from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
 import os from "os";
-import { getCommitHash } from "@utils/gitMeta";
+import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import authRouter from "@src/routers/authRouter";
 import taskRouter from "@src/routers/taskRouter";
+import metaRouter from "@src/routers/metaRouter";
 import { Response, Request } from 'express';
 
 const app = express();
@@ -36,6 +37,7 @@ console.log("  Software:");
 console.log("    Node.js: " + process.versions.node);
 console.log("    V8: " + process.versions.v8);
 console.log("    CommitHash: " + await getCommitHash());
+console.log("    CommitMessage: " + await getCommitMessage());
 console.log("  Configuration:");
 console.log("    Port: " + port);
 
@@ -54,6 +56,7 @@ logger.info("JSON parser enabled");
 app.use('/debug', debugRouter);
 app.use('/auth', authRouter);
 app.use('/task', taskRouter);
+app.use('/meta', metaRouter);
 logger.info("Routers mounted");
 
 app.listen(port, () => {
