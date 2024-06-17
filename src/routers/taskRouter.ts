@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Task } from '@prisma/client';
-import { createTask, getTasks, getTasksByChild, updateTask, deleteTask } from '@src/services/taskService';
+import { getTask, createTask, getTasks, getTasksByChild, updateTask, deleteTask } from '@src/services/taskService';
 
 const router = Router();
 
@@ -70,6 +70,25 @@ router.post('/', (req, res) => {
                 });
             });
     }
+});
+
+router.get('/:taskId', (req, res) => {
+    getTask(req.params.taskId)
+        .then((task: Task | null) => {
+            if (task) {
+                res.status(200).json(task);
+            } else {
+                res.status(404).json({
+                    message: 'タスクが見つかりませんでした'
+                });
+            }
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: 'エラーが発生しました',
+                error: err
+            });
+        });
 });
 
 router.put('/:taskId', (req, res) => {
