@@ -34,25 +34,27 @@ model HomeGroup {
 }
 
 model Task {
-  id             String           @id @default(cuid())
-  display_name   String
-  iconEmoji      String
-  bg_color       String
-  home_group_id  String
-  home_group     HomeGroup        @relation(fields: [home_group_id], references: [id])
-  created_at     DateTime         @default(now())
-  reward         Int
-  TaskCompletion TaskCompletion[]
+  id               String             @id @default(cuid())
+  display_name     String
+  iconEmoji        String
+  bg_color         String
+  home_group_id    String
+  home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
+  created_at       DateTime           @default(now())
+  reward           Int
+  TaskCompletion   TaskCompletion[]
+  TaskChildLinkage TaskChildLinkage[]
 }
 
 model Child {
-  id             String           @id @default(cuid())
-  name           String
-  linked_user_id String
-  created_at     DateTime         @default(now())
-  home_group_id  String
-  home_group     HomeGroup        @relation(fields: [home_group_id], references: [id])
-  TaskCompletion TaskCompletion[]
+  id               String             @id @default(cuid())
+  name             String
+  linked_user_id   String
+  created_at       DateTime           @default(now())
+  home_group_id    String
+  home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
+  TaskCompletion   TaskCompletion[]
+  TaskChildLinkage TaskChildLinkage[]
 }
 
 model TaskCompletion {
@@ -62,4 +64,12 @@ model TaskCompletion {
   registerd_at DateTime @default(now())
   child        Child    @relation(fields: [child_id], references: [id])
   task         Task     @relation(fields: [task_id], references: [id])
+}
+
+model TaskChildLinkage {
+  id       String @id @default(cuid())
+  task_id  String
+  child_id String
+  task     Task   @relation(fields: [task_id], references: [id])
+  child    Child  @relation(fields: [child_id], references: [id])
 }
