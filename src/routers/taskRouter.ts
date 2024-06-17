@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
         });
         return;
     }
-    if (!body.child_id || !body.user_id || !body.title || !body.description) {
+    if (!body.displayName || !body.reward) {
         res.status(400).json({
             message: '不正なリクエスト: child_id, user_id, title, descriptionは必須です'
         });
