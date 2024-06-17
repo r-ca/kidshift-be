@@ -8,7 +8,8 @@ function issueToken(payload: object) {
 function issueTokenByUserId(userId: string) {
     const payload = {
         sub: userId,
-        role: Role.PARENT
+        role: Role.PARENT,
+        home_group_id: "TODO" // やる
     };
 
     const options = {
