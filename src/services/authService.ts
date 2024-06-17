@@ -7,7 +7,7 @@ async function registUser(email: string, password: string, homeGroupId?: string)
     
     const hashedPassword = bcrypt.hashSync(password, 10);
 
-    if (!homeGroupId) {
+    if (!homeGroupId) { // TODO: 作成失敗したときにHomeGroupだけ残るのを防ぐ
         homeGroupId = await createHomeGroup(email).then((homeGroup) => { return homeGroup.id });
     }
 
