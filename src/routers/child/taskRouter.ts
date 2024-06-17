@@ -10,6 +10,10 @@ router.get('/', (req: Request, res: Response) => {
     res.status(501).send('WIP');
 });
 
+router.get('/:taskId', (req: Request, res: Response) => {
+    res.status(501).send('WIP');
+});
+
 router.post('/:taskId/complete', (req: Request, res: Response) => {
     if (!req.user) {
         return res.status(500).json({
