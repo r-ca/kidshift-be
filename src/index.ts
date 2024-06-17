@@ -6,7 +6,7 @@ import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import authRouter from "@src/routers/authRouter";
 import taskRouter from "@src/routers/taskRouter";
 import metaRouter from "@src/routers/metaRouter";
-import { Response, Request } from 'express';
+import { Response, Request, Router } from 'express';
 // Swagger
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -62,7 +62,11 @@ const options = {
     },
     apis: ['./src/routers/*.ts'],
 };
-app.get('/swagger', swaggerUi.serve, swaggerUi.setup(swaggerJSDoc(options)));
+
+const swaggerRouter = Router();
+swaggerRouter.use('/', swaggerUi.serve);
+swaggerRouter.get('/', swaggerUi.setup(swaggerJSDoc(options)));
+app.use('/api-docs', swaggerRouter);
 
 app.use(express.json());
 logger.info("JSON parser enabled");
