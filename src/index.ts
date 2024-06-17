@@ -4,6 +4,7 @@ import debugRouter from "@src/routers/debugRouter";
 import os from "os";
 import { getCommitHash } from "@utils/gitCommitHash";
 import authRouter from "@src/routers/authRouter";
+import taskRouter from "@src/routers/taskRouter";
 import { Response, Request } from 'express';
 
 const app = express();
@@ -52,6 +53,7 @@ logger.info("JSON parser enabled");
 
 app.use('/debug', debugRouter);
 app.use('/auth', authRouter);
+app.use('/task', taskRouter);
 logger.info("Routers mounted");
 
 app.listen(port, () => {
