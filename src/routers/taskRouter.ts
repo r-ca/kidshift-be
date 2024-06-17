@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Task } from '@prisma/client';
-import { createTask, getTasks } from '@src/services/taskService';
+import { createTask, getTasks, getTasksByChild } from '@src/services/taskService';
 
 const router = Router();
 
@@ -18,16 +18,30 @@ router.get('/', (req, res) => {
         });
         return;
     } else {
-        getTasks(body.home_group_id, body.child_id)
-            .then((tasks: Task[]) => {
-                res.status(200).json(tasks);
-            })
-            .catch((err) => {
-                res.status(500).json({
-                    message: 'エラーが発生しました',
-                    error: err
+        if (!body.child_id) {
+            getTasks(body.home_group_id)
+                .then((tasks: Task[]) => {
+                    res.status(200).json(tasks);
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        message: 'エラーが発生しました',
+                        error: err
+                    });
                 });
-            });
+            return;
+        } else {
+            getTasksByChild(body.child_id)
+                .then((tasks: Task[]) => {
+                    res.status(200).json(tasks);
+                })
+                .catch((err) => {
+                    res.status(500).json({
+                        message: 'エラーが発生しました',
+                        error: err
+                    });
+                });
+        }
     }
 });
 

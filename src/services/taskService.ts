@@ -1,12 +1,19 @@
 import { PrismaPromise, Task } from "@prisma/client";
 import prisma from "@src/prisma";
 
-function getTasks(homeGroupId: string, childId?: string): PrismaPromise<Task[]> {
+function getTasks(homeGroupId: string): PrismaPromise<Task[]> {
     return prisma.task.findMany({
         where: {
             home_group_id: {
                 equals: homeGroupId
             },
+        },
+    });
+}
+
+function getTasksByChild(childId: string): PrismaPromise<Task[]> {
+    return prisma.task.findMany({
+        where: {
             TaskChildLinkage: {
                 some: {
                     child_id: {
@@ -27,4 +34,4 @@ function createTask(task: Task): PrismaPromise<Task> {
     });
 }
 
-export { getTasks, createTask }
+export { getTasks, createTask, getTasksByChild }
