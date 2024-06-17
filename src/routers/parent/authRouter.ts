@@ -26,8 +26,8 @@ router.post('/login', (req: Request, res: Response) => {
     loginUser(email, password)
         .then((token) => {
             if (token) {
-                res.json({ 
-                    "accessToken": token 
+                res.json({
+                    "accessToken": token
                 });
             } else {
                 res.status(401).json({ message: "ログイン失敗: emailかpasswordが間違っています" });
