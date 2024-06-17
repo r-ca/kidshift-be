@@ -17,9 +17,17 @@ router.post('/:taskId/complete', (req: Request, res: Response) => {
         });
     }
     logger.info(`Task complete request from ${req.user.claims.sub} for task ${req.params.taskId}`);
-    registCompleteTask(req.params.taskId, req.user.claims.sub);
+    try {
+        registCompleteTask(req.params.taskId, req.user.claims.sub);
+    } catch (error) {
+        logger.error(`Failed to complete task: ${error}`);
+        return res.status(500).json({
+            message: 'エラーが発生しました(タスクの完了に失敗しました)'
+        });
+    }
+    logger.info(`Task ${req.params.taskId} completed by ${req.user.claims.sub}`);
     res.status(200).json({
-        message: 'タスクの完了を記録しました'
+        message: 'タスクを完了しました'
     });
 });
 export default router;
