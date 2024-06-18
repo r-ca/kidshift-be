@@ -46,7 +46,7 @@ router.post('/', (req, res) => {
             });
             return;
         }
-
+        // TODO: 共通化
         task.display_name = body.displayName;
         task.reward = body.reward;
         task.home_group_id = req.user.claims.home_group_id;
@@ -98,6 +98,7 @@ router.put('/:taskId', (req, res) => {
         return;
     } else {
         const task: Task = {} as Task;
+        // TODO: 共通化
         task.id = req.params.taskId;
         task.display_name = body.displayName;
         task.reward = body.reward;
