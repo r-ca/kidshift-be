@@ -27,23 +27,23 @@ class Logger {
     }
 
     info = (message: string) => {
-        console.log(chalk.blue('[ INFO ]') + ' ' + this.tagString() + ':\t' + message);
+        console.log(chalk.blue('[INFO]') + '\t ' + this.tagString() + ':\t' + message);
     }
 
     warn = (message: string) => {
-        console.log(chalk.yellow('[ WARN ]') + ' ' + this.tagString() + ':\t' + message);
+        console.log(chalk.yellow('[WARN]') + '\t ' + this.tagString() + ':\t' + message);
     }
 
     error = (message: string) => {
-        console.log(chalk.red('[ERROR ]') + ' ' + this.tagString() + ':\t' + message);
+        console.log(chalk.red('[ERROR]') + '\t ' + this.tagString() + ':\t' + message);
     }
 
     debug = (message: string) => {
-        console.log(chalk.gray('[DEBUG ]' + ' ' + this.tagString() + ':\t' + message));
+        console.log(chalk.gray('[DEBUG]' + '\t ' + this.tagString() + ':\t' + message));
     }
 
     success = (message: string) => {
-        console.log(chalk.green('[SUCCESS]') + ' ' + this.tagString() + ':\t' + message);
+        console.log(chalk.green('[SUCC]') + '\t ' + this.tagString() + ':\t' + message);
     }
 }
 
