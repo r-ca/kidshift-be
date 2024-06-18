@@ -35,8 +35,8 @@ model HomeGroup {
 model Task {
   id               String             @id @default(cuid())
   display_name     String
-  iconEmoji        String
-  bg_color         String
+  iconEmoji        String?
+  bg_color         String?
   home_group_id    String
   home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
   created_at       DateTime           @default(now())

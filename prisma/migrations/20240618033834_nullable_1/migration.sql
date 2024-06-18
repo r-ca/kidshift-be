@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "Task" ALTER COLUMN "iconEmoji" DROP NOT NULL,
+ALTER COLUMN "bg_color" DROP NOT NULL;
