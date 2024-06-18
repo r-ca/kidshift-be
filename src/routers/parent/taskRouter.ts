@@ -38,6 +38,19 @@ router.post('/', (req, res) => {
         });
         return;
     } else {
+        const task: Task = {} as Task;
+
+        if (req.user === undefined) {
+            res.status(500).json({
+                message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
+            });
+            return;
+        }
+
+        task.display_name = body.displayName;
+        task.reward = body.reward;
+        task.home_group_id = req.user.claims.home_group_id;
+
         createTask(body)
             .then((task: Task) => {
                 res.status(201).json(task);
