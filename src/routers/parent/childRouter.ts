@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getChilds, createChild } from '@src/services/childService';
+import { getChilds, createChild, deleteChild } from '@src/services/childService';
 import Logger from '@src/logger';
 
 const router = Router();
@@ -53,9 +53,16 @@ router.get('/:childId/login', (req: Request, res: Response) => {
 });
 
 router.delete('/:childId', (req: Request, res: Response) => {
-    // 子供を削除
-    res.status(501).json({
-        message: 'WIP'
+    const childId = req.params.childId; // TODO: Validate childId
+    deleteChild(childId).then((child) => {
+        res.status(200).json(child);
+    }).catch((err) => {
+        logger.error('Failed to delete child')
+        logger.debug(err);
+        res.status(500).json({
+            message: 'エラーが発生しました',
+            detail: err
+        });
     });
 });
 
