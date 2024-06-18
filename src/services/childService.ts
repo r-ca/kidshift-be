@@ -1,7 +1,7 @@
 import { Child } from '@prisma/client';
 import prisma from '@src/prisma';
 
-async function getChildList(homeGroupId: string): Promise<Child[]> {
+async function getChilds(homeGroupId: string): Promise<Child[]> {
     return prisma.child.findMany({
         where: {
             home_group_id: homeGroupId
@@ -10,4 +10,4 @@ async function getChildList(homeGroupId: string): Promise<Child[]> {
 }
 
 
-export { getChildList };
+export { getChilds };
