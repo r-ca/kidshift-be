@@ -104,4 +104,10 @@ router.delete('/:taskId', (req, res) => {
         });
 });
 
+router.post('/:taskId/complete', (req, res) => {
+    res.status(501).json({
+        message: 'WIP'
+    });
+});
+
 export default router;
