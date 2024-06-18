@@ -5,44 +5,23 @@ import { getTask, createTask, getTasks, getTasksByChild, updateTask, deleteTask 
 const router = Router();
 
 router.get('/', (req, res) => {
-    const body = req.body;
-    if (!body) {
-        res.status(400).json({
-            message: '不正なリクエスト: リクエストボディが空です'
+    if (req.user === undefined) {
+        res.status(500).json({
+            message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
         });
         return;
     }
-    if (!body.home_group_id) {
-        res.status(400).json({
-            message: '不正なリクエスト: home_group_idは必須です'
+    getTasks(req.user.claims.home_group_id)
+        .then((tasks: Task[]) => {
+            res.status(200).json(tasks);
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: 'エラーが発生しました',
+                error: err
+            });
         });
-        return;
-    } else {
-        if (!body.child_id) {
-            getTasks(body.home_group_id)
-                .then((tasks: Task[]) => {
-                    res.status(200).json(tasks);
-                })
-                .catch((err) => {
-                    res.status(500).json({
-                        message: 'エラーが発生しました',
-                        error: err
-                    });
-                });
-            return;
-        } else {
-            getTasksByChild(body.child_id)
-                .then((tasks: Task[]) => {
-                    res.status(200).json(tasks);
-                })
-                .catch((err) => {
-                    res.status(500).json({
-                        message: 'エラーが発生しました',
-                        error: err
-                    });
-                });
-        }
-    }
+    return;
 });
 
 router.post('/', (req, res) => {
