@@ -84,9 +84,34 @@ router.get('/:taskId', (req, res) => {
 });
 
 router.put('/:taskId', (req, res) => {
-    res.status(501).json({
-        message: 'WIP'
-    });
+    const body = req.body;
+    if (!body) {
+        res.status(400).json({
+            message: '不正なリクエスト: リクエストボディが空です'
+        });
+        return;
+    }
+    if (!body.displayName || !body.reward) {
+        res.status(400).json({
+            message: '不正なリクエスト: displayName, rewardは必須です'
+        });
+        return;
+    } else {
+        const task: Task = {} as Task;
+        task.id = req.params.taskId;
+        task.display_name = body.displayName;
+        task.reward = body.reward;
+        updateTask(task)
+            .then((task: Task) => {
+                res.status(200).json(task);
+            })
+            .catch((err) => {
+                res.status(500).json({
+                    message: 'エラーが発生しました',
+                    error: err
+                });
+            });
+    }
 });
 
 router.delete('/:taskId', (req, res) => {
