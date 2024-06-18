@@ -41,6 +41,10 @@ class Logger {
     debug = (message: string) => {
         console.log(chalk.gray('[DEBUG]' + ' ' + this.tagString() + ':\t' + message));
     }
+
+    success = (message: string) => {
+        console.log(chalk.green('[SUCCESS]') + ' ' + this.tagString() + ':\t' + message);
+    }
 }
 
 export default Logger;
