@@ -26,9 +26,22 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.post('/', (req: Request, res: Response) => {
-    // 子供を追加
-    res.status(501).json({
-        message: 'WIP'
+    if (!req.user) {
+        return res.status(500).json({
+            message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
+        });
+    }
+    const homeGroupId = req.user.claims.home_group_id;
+    const childName = req.body.name;
+    createChild(childName, homeGroupId).then((child) => {
+        res.status(201).json(child);
+    }).catch((err) => {
+        logger.error('Failed to create child')
+        logger.debug(err);
+        res.status(500).json({
+            message: 'エラーが発生しました',
+            detail: err
+        });
     });
 });
 
