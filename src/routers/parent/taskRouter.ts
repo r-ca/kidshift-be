@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { Task } from '@prisma/client';
-import { getTask, createTask, getTasks, getTasksByChild, updateTask, deleteTask } from '@src/services/taskService';
+import { getTask, createTask, getTasks, updateTask, deleteTask, registCompleteTask } from '@src/services/taskService';
 
 const router = Router();
 
@@ -105,9 +105,24 @@ router.delete('/:taskId', (req, res) => {
 });
 
 router.post('/:taskId/complete', (req, res) => {
-    res.status(501).json({
-        message: 'WIP'
-    });
+    if (req.query.childId === undefined) {
+        res.status(400).json({
+            message: '不正なリクエスト: childIdは必須です'
+        });
+        return;
+    }
+    registCompleteTask(req.params.taskId, req.query.childId as string)
+        .then(() => {
+            res.status(200).json({
+                message: 'OK',
+            });
+        })
+        .catch((err) => {
+            res.status(500).json({
+                message: 'エラーが発生しました',
+                error: err
+            });
+        });
 });
 
 export default router;
