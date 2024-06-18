@@ -18,4 +18,12 @@ async function createChild(childName: string, homeGroupId: string): Promise<Chil
     }).then((child) => { return child; });
 }
 
-export { getChilds, createChild };
+async function deleteChild(childId: string): Promise<Child> {
+    return prisma.child.delete({
+        where: {
+            id: childId
+        }
+    }).then((child) => { return child; });
+}
+
+export { getChilds, createChild, deleteChild }
