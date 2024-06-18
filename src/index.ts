@@ -83,5 +83,5 @@ logger.info("Routers mounted");
 
 
 app.listen(port, () => {
-    logger.success(`Server started! Listening on port ${port}`);
+    logger.complete(`Server started! Listening on port ${port}`);
 });
