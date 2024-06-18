@@ -53,6 +53,19 @@ app.use(express.json());
 logger.info("JSON parser enabled");
 logger.success("Configuration applied successfully");
 
+// connect db
+logger.info("Connecting to database...");
+try {
+    await prisma.$connect();
+    // get db version with raw query
+    const result = await prisma.$queryRaw`SELECT version()` as [{ version: string }];
+    logger.success("Connected to database. version: " + result[0].version.split(" ").slice(0, 2).join(" "))
+    logger.debug("raw: " + JSON.stringify(result));
+} catch (e) {
+    logger.error("Failed to connect to database");
+    process.exit(1);
+}
+
 app.get("/", (_req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
