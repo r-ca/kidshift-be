@@ -49,6 +49,10 @@ console.log("\n");
 
 logger.info("Starting server...");
 
+app.use(express.json());
+logger.info("JSON parser enabled");
+logger.success("Configuration applied successfully");
+
 app.get("/", (_req: Request, res: Response) => {
     res.status(200).sendFile("index.html", { root: "static" });
 });
@@ -69,17 +73,15 @@ swaggerRouter.get('/', swaggerUi.setup(swaggerJSDoc(options)));
 app.use('/docs', swaggerRouter);
 logger.info("Swagger enabled and mounted at /docs");
 
-app.use(express.json());
-logger.info("JSON parser enabled");
 
 app.use('/parent', parentRouter);
-logger.debug("Parent router mounted");
+logger.debug("Parent router mounted at /parent");
 app.use('/child', childRouter);
-logger.debug("Child router mounted");
-app.use('/debug', debugRouter);
+logger.debug("Child router mounted at /child");
+app.use('/debug', debugRouter); // TODO: NODE_ENVに応じてマウントをやめる
 app.use('/meta', metaRouter);
-logger.debug("Common routes mounted");
-logger.info("Routers mounted");
+logger.debug("Common routes mounted at /meta and /debug");
+logger.success("Routers mounted successfully");
 
 
 app.listen(port, () => {
