@@ -51,7 +51,7 @@ router.post('/', (req, res) => {
         task.reward = body.reward;
         task.home_group_id = req.user.claims.home_group_id;
 
-        createTask(body)
+        createTask(task)
             .then((task: Task) => {
                 res.status(201).json(task);
             })
