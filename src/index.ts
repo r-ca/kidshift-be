@@ -73,10 +73,14 @@ app.use(express.json());
 logger.info("JSON parser enabled");
 
 app.use('/parent', parentRouter);
+logger.debug("Parent router mounted");
 app.use('/child', childRouter);
+logger.debug("Child router mounted");
 app.use('/debug', debugRouter);
 app.use('/meta', metaRouter);
+logger.debug("Common routes mounted");
 logger.info("Routers mounted");
+
 
 app.listen(port, () => {
     logger.info(`Server started! Listening on port ${port}`);
