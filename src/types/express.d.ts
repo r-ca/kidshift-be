@@ -5,7 +5,11 @@ declare global {
     interface Request {
       user?: {
         token: string;
-        claims: any;
+        claims: {
+            sub: string;
+            role: string;
+            home_group_id: string;
+        };
       };
     }
   }
