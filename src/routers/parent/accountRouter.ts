@@ -1,6 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { findUserById } from '@src/utils/userUtils';
-
+import { updateUser } from '@src/services/accountService';
 const router = Router();
 
 // Get userinfo
@@ -18,4 +18,11 @@ router.get('/', (req: Request, res: Response) => {
     }
     res.status(200).json(user);
 });
-    
+
+router.put('/', (req: Request, res: Response) => {
+    res.status(501).json({
+        message: 'WIP'
+    });
+});
+
+export default router;
