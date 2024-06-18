@@ -9,12 +9,13 @@ async function getChilds(homeGroupId: string): Promise<Child[]> {
     }).then((children) => { return children; });
 }
 
-async function addChild(childName: string): Promise<Child> {
+async function createChild(childName: string, homeGroupId: string): Promise<Child> {
     const child: Child = {} as Child;
     child.name = childName;
+    child.home_group_id = homeGroupId;
     return prisma.child.create({
         data: child
     }).then((child) => { return child; });
 }
 
-export { getChilds, addChild };
+export { getChilds, createChild };
