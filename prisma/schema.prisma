@@ -48,7 +48,6 @@ model Task {
 model Child {
   id               String             @id @default(cuid())
   name             String
-  linked_user_id   String
   created_at       DateTime           @default(now())
   home_group_id    String
   home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
