@@ -7,6 +7,7 @@ import childRouter from "@src/routers/child";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import { Response, Request, Router } from 'express';
+import prisma from '@src/prisma';
 // Swagger
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
