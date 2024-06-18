@@ -45,6 +45,10 @@ class Logger {
     success = (message: string) => {
         console.log(chalk.green('[SUCC]') + '\t ' + this.tagString() + ':\t' + message);
     }
+
+    complete = (message: string) => {
+        console.log(chalk.bgGreen(chalk.black('[DONE]')) + '\t ' + this.tagString() + ':\t' + chalk.green(message));
+    }
 }
 
 export default Logger;
