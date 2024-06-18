@@ -3,10 +3,6 @@ import { Role } from "@src/enums";
 import { findUserById } from "./userUtils";
 import { User } from "@prisma/client";
 
-function issueToken(payload: object) {
-    return jsonwebtoken.sign(payload, "secret");
-}
-
 async function issueTokenByUserId(userId: string) {
     const user: User = await findUserById(userId);
     if (!user) {
