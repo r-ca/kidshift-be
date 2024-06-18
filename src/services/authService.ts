@@ -2,14 +2,30 @@ import prisma from "@src/prisma";
 import bcrypt from "bcrypt";
 import { issueTokenByUserId } from "@src/utils/tokenUtils";
 import { createHomeGroup } from "@src/services/homeGroupService";
+import Logger from "@src/logger";
+
+const logger = new Logger();
+logger.setTag('authService');
 
 async function registUser(email: string, password: string, homeGroupId?: string): Promise<String> {
     
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     if (!homeGroupId) { // TODO: 作成失敗したときにHomeGroupだけ残るのを防ぐ
-        homeGroupId = await createHomeGroup(email).then((homeGroup) => { return homeGroup.id });
+        createHomeGroup(email).then((homeGroup) => { return homeGroup.id })
+            .then((id) => {
+                if (!id) {
+                    logger.error("Create HomeGroup failed, id is undefined")
+                    throw new Error("Create HomeGroup failed");
+                }
+                homeGroupId = id;
+            }).catch((e) => {
+                logger.error("Create HomeGroup failed");
+                logger.debug(e.message);
+            });
     }
+
+    homeGroupId = homeGroupId as string; // ここに到達している時点でundefinedにはならないため
 
     const registUser = prisma.user.create({ // TODO: emailバリデーション
         data: {
