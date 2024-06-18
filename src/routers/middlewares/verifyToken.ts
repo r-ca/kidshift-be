@@ -16,14 +16,12 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
     }
     try {
         jsonwebtoken.verify(token, "secret"); // TODO: ハードコードやめる
-        // req.user = { token, claims: jsonwebtoken.decode(token) };
         const decoded = jsonwebtoken.decode(token) as { [key: string]: string };
         req.user = { token, claims: {
             sub: decoded["sub"],
             role: decoded["role"],
             home_group_id: decoded["home_group_id"]
         }};
-        console.log(req.user);
         next();
     } catch (error) {
         return res.status(401).send("アクセス拒否: トークンの検証に失敗しました(有効期限切れか、不正なトークンです)");
