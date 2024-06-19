@@ -1,6 +1,5 @@
 import { Router, Request, Response } from 'express';
 import { findUserById } from '@src/utils/userUtils';
-import { updateUser } from '@src/services/parent/accountService';
 const router = Router();
 
 // Get userinfo
