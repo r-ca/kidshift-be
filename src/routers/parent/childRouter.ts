@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { getChilds, createChild, deleteChild } from '@src/services/childService';
+import { generateLoginCode, getChilds, createChild, deleteChild } from '@src/services/childService';
 import Logger from '@src/logger';
 
 const router = Router();
@@ -46,9 +46,18 @@ router.post('/', (req: Request, res: Response) => {
 });
 
 router.get('/:childId/login', (req: Request, res: Response) => {
-    // 子供のログイン
-    res.status(501).json({
-        message: 'WIP'
+    const childId = req.params.childId; // TODO: Validate childId
+    generateLoginCode(childId).then((code) => {
+        res.status(200).json({
+            code: code
+        });
+    }).catch((err) => {
+        logger.error('Failed to generate login code')
+        logger.debug(err);
+        res.status(500).json({
+            message: 'エラーが発生しました',
+            detail: err
+        });
     });
 });
 
