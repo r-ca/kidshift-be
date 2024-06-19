@@ -5,7 +5,7 @@ let requestLogger: Logger;
 function getRequestLogger(): Logger {
     if (!requestLogger) {
         requestLogger = new Logger();
-        requestLogger.setTag('APIRequest');
+        requestLogger.setTag('API-LOG');
     }
     return requestLogger;
 }
