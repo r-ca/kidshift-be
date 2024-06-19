@@ -81,3 +81,5 @@ router.put('/:childId', (req: Request, res: Response) => {
         message: 'WIP'
     });
 });
+
+export default router;
