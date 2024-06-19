@@ -53,6 +53,7 @@ model Child {
   home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
   TaskCompletion   TaskCompletion[]
   TaskChildLinkage TaskChildLinkage[]
+  ActiveLoginCode  ActiveLoginCode[]
 }
 
 model TaskCompletion {
@@ -70,4 +71,12 @@ model TaskChildLinkage {
   child_id String
   task     Task   @relation(fields: [task_id], references: [id])
   child    Child  @relation(fields: [child_id], references: [id])
+}
+
+model ActiveLoginCode {
+  id         String   @id @default(cuid())
+  child_id   String
+  code       String
+  created_at DateTime @default(now())
+  child      Child    @relation(fields: [child_id], references: [id])
 }
