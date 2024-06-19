@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { generateLoginCode, getChilds, createChild, deleteChild } from '@src/services/childService';
+import { generateLoginCode, getChilds, createChild, deleteChild } from '@src/services/parent/childService';
 import Logger from '@src/logger';
 
 const router = Router();
