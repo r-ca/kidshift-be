@@ -4,6 +4,7 @@ import debugRouter from "@src/routers/debugRouter";
 import metaRouter from "@src/routers/metaRouter";
 import parentRouter from "@src/routers/parent";
 import childRouter from "@src/routers/child";
+import logging from "./routers/middlewares/logging";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import { Response, Request, Router } from 'express';
@@ -52,6 +53,8 @@ logger.info("Starting server...");
 
 app.use(express.json());
 logger.info("JSON parser enabled");
+app.use(logging);
+logger.info("Logging middleware enabled");
 logger.success("Configuration applied successfully");
 
 // connect db
