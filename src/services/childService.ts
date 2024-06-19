@@ -1,5 +1,10 @@
-import { Child } from '@prisma/client';
+import { Child, ActiveLoginCode } from '@prisma/client';
 import prisma from '@src/prisma';
+import cron from 'node-cron';
+import Logger from '@src/logger';
+
+const logger = new Logger();
+logger.setTag('ChildService');
 
 async function getChilds(homeGroupId: string): Promise<Child[]> {
     return prisma.child.findMany({
@@ -26,9 +31,25 @@ async function deleteChild(childId: string): Promise<Child> {
     }).then((child) => { return child; });
 }
 
-async function generateLoginCode(childId: string): Promise<string> {
-    // 仮置き
-    return Promise.resolve("123456");
+async function generateLoginCode(childId: string): Promise<number> {
+    const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
+    logger.debug(`Generated login code: ${loginCode}`);
+    cron.schedule('0 0 * * *', () => {
+        prisma.activeLoginCode.delete({
+            where: {
+                code: loginCode
+            }
+        });
+    });
+    return prisma.activeLoginCode.create({
+        data: {
+            child_id: childId,
+            code: loginCode
+        }
+    }).then((code) => {
+        logger.success(`Login code ${code.code} is generated for child ${childId}`);
+        return code.code;
+    });
 }
 
 export { getChilds, createChild, deleteChild, generateLoginCode }
