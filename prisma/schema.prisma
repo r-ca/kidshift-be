@@ -76,7 +76,7 @@ model TaskChildLinkage {
 model ActiveLoginCode {
   id         String   @id @default(cuid())
   child_id   String
-  code       String
+  code       Int
   created_at DateTime @default(now())
   child      Child    @relation(fields: [child_id], references: [id])
 }
