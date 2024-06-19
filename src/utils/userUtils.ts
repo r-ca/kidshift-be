@@ -1,4 +1,4 @@
-import { User } from '@prisma/client';
+import { Child, User } from '@prisma/client';
 import prisma from '@src/prisma';
 
 async function findUserById(userId: string): Promise<User> {
@@ -14,4 +14,17 @@ async function findUserById(userId: string): Promise<User> {
     });
 }
 
-export { findUserById };
+async function findChildById(childId: string): Promise<Child> {
+    return await prisma.child.findUnique({
+        where: {
+            id: childId
+        }
+    }).then(child => {
+        if (!child) {
+            throw new Error('ユーザーが見つかりません');
+        }
+        return child;
+    });
+}
+
+export { findUserById, findChildById }
