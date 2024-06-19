@@ -26,4 +26,9 @@ async function deleteChild(childId: string): Promise<Child> {
     }).then((child) => { return child; });
 }
 
-export { getChilds, createChild, deleteChild }
+async function generateLoginCode(childId: string): Promise<string> {
+    // 仮置き
+    return Promise.resolve("123456");
+}
+
+export { getChilds, createChild, deleteChild, generateLoginCode }
