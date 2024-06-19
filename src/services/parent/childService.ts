@@ -34,13 +34,13 @@ async function deleteChild(childId: string): Promise<Child> {
 async function generateLoginCode(childId: string): Promise<number> {
     const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
     logger.debug(`Generated login code: ${loginCode}`);
-    cron.schedule('0 0 * * *', () => {
-        prisma.activeLoginCode.delete({
-            where: {
-                code: loginCode
-            }
-        });
-    });
+    // cron.schedule('0 0 * * *', () => {
+    //     prisma.activeLoginCode.delete({
+    //         where: {
+    //             code: loginCode
+    //         }
+    //     });
+    // });
     return prisma.activeLoginCode.create({
         data: {
             child_id: childId,
