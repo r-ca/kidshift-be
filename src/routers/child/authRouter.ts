@@ -15,3 +15,5 @@ router.post('/login', (req: Request, res: Response) => {
         res.status(500).json({ message: 'ログインに失敗しました', detail: err });
     });
 });
+
+export default router;
