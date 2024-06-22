@@ -13,7 +13,7 @@ async function registUser(email: string, password: string, homeGroupId?: string)
 
     if (!homeGroupId) { // TODO: 作成失敗したときにHomeGroupだけ残るのを防ぐ
         logger.info("HomeGroup is not specified, creating new HomeGroup");
-        createHomeGroup(email).then((homeGroup) => { return homeGroup.id })
+        await createHomeGroup(email).then((homeGroup) => { return homeGroup.id })
             .then((id) => {
                 if (!id) {
                     logger.error("Create HomeGroup failed, id is undefined")
