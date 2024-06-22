@@ -12,12 +12,15 @@ async function registUser(email: string, password: string, homeGroupId?: string)
     const hashedPassword = bcrypt.hashSync(password, 10);
 
     if (!homeGroupId) { // TODO: 作成失敗したときにHomeGroupだけ残るのを防ぐ
+        logger.info("HomeGroup is not specified, creating new HomeGroup");
         createHomeGroup(email).then((homeGroup) => { return homeGroup.id })
             .then((id) => {
                 if (!id) {
                     logger.error("Create HomeGroup failed, id is undefined")
                     throw new Error("Create HomeGroup failed");
                 }
+                logger.info("Create HomeGroup success");
+                logger.debug(`HomeGroupId: ${id}`);
                 homeGroupId = id;
             }).catch((e) => {
                 logger.error("Create HomeGroup failed");
