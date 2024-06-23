@@ -37,6 +37,7 @@
     "jsonwebtoken": "^9.0.2",
     "live-server": "^1.2.2",
     "node-cron": "^3.0.3",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "tsx": "^4.15.7"
   }
 }
