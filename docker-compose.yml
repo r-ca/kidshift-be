@@ -40,6 +40,19 @@ services:
     depends_on:
       - postgres
 
+  kidshift:
+    build: ./kidshift
+    container_name: kidshift_app
+    environment:
+      DATABASE_URL: postgres://kidshift:kidshift@kidshift:5432/kidshift
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./kidshift:/usr/src/kidshift
+    depends_on:
+      - postgres
+      - minio
+
 volumes:
   postgres_data:
   minio_data:
