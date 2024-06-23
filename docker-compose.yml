@@ -44,7 +44,7 @@ services:
     build: .
     container_name: kidshift_app
     environment:
-      DATABASE_URL: postgres://kidshift:kidshift@kidshift:5432/kidshift
+      DATABASE_URL: postgresql://kidshift:kidshift@postgres:5432/kidshift
     ports:
       - "3000:3000"
     volumes:
