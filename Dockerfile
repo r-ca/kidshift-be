@@ -1,37 +1,25 @@
-# Build
-FROM node:18-alpine as build
+FROM node:18-alpine
 
+# Set working directory
 WORKDIR /usr/src/kidshift
 
+# Copy package files and install dependencies
 COPY package*.json ./
-
 RUN npm install
 
+# Copy Prisma files and generate Prisma client
 COPY prisma ./prisma/
 RUN npx prisma generate
 
-COPY . . 
-
+# Copy the rest of the application code and build the project
+COPY . .
 RUN npm run build
 
-# Runtime
-FROM node:18-alpine as runtime
-WORKDIR /usr/src/kidshift
+# Set environment variables if necessary
+ENV NODE_ENV=production
 
-COPY package-lock.json .
-COPY package.json .
-
-COPY --from=build /usr/src/kidshift/dist ./dist
-COPY --from=build /usr/src/kidshift/node_modules ./node_modules
-COPY --from=build /usr/src/kidshift/prisma ./prisma
-COPY --from=build /usr/src/kidshift/src ./src
-COPY --from=build /usr/src/kidshift/static ./static
-
-
-# CMD ["npm", "start"]
-
-# cat package.json to debug
-# CMD ["pwd"]
-CMD ["ls", "-la"]
-
+# Expose the application port
 EXPOSE 3000
+
+# Command to run the application
+CMD ["npm", "start"]
