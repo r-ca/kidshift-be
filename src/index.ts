@@ -44,7 +44,7 @@ console.log("    V8: " + process.versions.v8);
 console.log("    CommitHash: " + await getCommitHash());
 console.log("    CommitMessage: " + await getCommitMessage());
 console.log("  Configuration:");
-console.log("    Port: " + port);
+console.log("    DATABASE_URL: " + process.env.DATABASE_URL);
 
 console.log("====================================================================================================");
 console.log("\n");
@@ -67,6 +67,7 @@ try {
     logger.debug("raw: " + JSON.stringify(result));
 } catch (e) {
     logger.error("Failed to connect to database");
+    logger.debug("Error: " + e);
     process.exit(1);
 }
 
