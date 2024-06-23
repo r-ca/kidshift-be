@@ -48,7 +48,7 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - .:/usr/src/kidshift
+      - ./app:/usr/src/kidshift
     depends_on:
       - postgres
       - minio
