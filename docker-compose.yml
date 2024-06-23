@@ -1,0 +1,47 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:latest
+    container_name: postgres
+    environment:
+      POSTGRES_USER: kidshift
+      POSTGRES_PASSWORD: kidshift
+      POSTGRES_DB: kidshift
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  minio:
+    image: minio/minio:latest
+    container_name: minio
+    environment:
+      MINIO_ROOT_USER: kidshift
+      MINIO_ROOT_PASSWORD: kidshift
+    ports:
+      - "9000:9000"
+      - "9001:9001"
+    volumes:
+      - minio_data:/data
+      - minio_config:/root/.minio
+    command: server /data --console-address ":9001"
+
+  pgadmin:
+    image: dpage/pgadmin4:latest
+    container_name: pgadmin
+    environment:
+      PGADMIN_DEFAULT_EMAIL: kidshift@nem.x0.to
+      PGADMIN_DEFAULT_PASSWORD: kidshift
+    ports:
+      - "5050:80"
+    volumes:
+      - pgadmin_data:/var/lib/pgadmin
+    depends_on:
+      - postgres
+
+volumes:
+  postgres_data:
+  minio_data:
+  minio_config:
+  pgadmin_data:
