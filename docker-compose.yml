@@ -41,7 +41,7 @@ services:
       - postgres
 
   kidshift:
-    build: ./kidshift
+    build: .
     container_name: kidshift_app
     environment:
       DATABASE_URL: postgres://kidshift:kidshift@kidshift:5432/kidshift
