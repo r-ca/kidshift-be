@@ -1,5 +1,5 @@
 import prisma from "@src/prisma";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { issueTokenByUserId } from "@src/utils/tokenUtils";
 import { createHomeGroup } from "@src/services/homeGroupService";
 import Logger from "@src/logger";
