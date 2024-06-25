@@ -8,26 +8,16 @@ function getTasks(homeGroupId: string) {
                 equals: homeGroupId
             },
         },
-        include: {
-            TaskChildLinkage: true
-        },
         select: {
             id: true,
             display_name: true,
             reward: true,
             TaskChildLinkage: {
                 select: {
-                    child: {
-                        select: {
-                            id: {
-                                select: true,
-                                as: 'child_id'
-                            }
-                        }
-                    }
-                }
-            }
-        }
+                    child_id: true,
+                },
+            },
+        },
     });
 }
 
