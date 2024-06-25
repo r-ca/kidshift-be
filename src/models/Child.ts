@@ -4,7 +4,7 @@ interface ChildBaseItem {
 }
 
 interface ChildListResponse {
-    list: ChildBaseItem[]
+    list: ChildResponse[]
 }
 
 interface ChildResponse extends ChildBaseItem {
