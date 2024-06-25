@@ -8,7 +8,7 @@ import { TokenResponse } from "@src/models/Token";
 const logger = new Logger();
 logger.setTag('authService');
 
-async function registUser(email: string, password: string, homeGroupId?: string): Promise<TokenResponse> {
+async function registUser(email: string, password: string, homeGroupId?: string): Promise<String> {
 
     const hashedPassword = bcrypt.hashSync(password, 10);
 
@@ -41,10 +41,7 @@ async function registUser(email: string, password: string, homeGroupId?: string)
     });
 
     const user = await registUser;
-    const response: TokenResponse = {
-        accessToken: await issueTokenByUserId(user.id)
-    };
-    return Promise.resolve(response)
+    return issueTokenByUserId(user.id);
 }
 
 async function loginUser(email: string, password: string): Promise<String | null> {
