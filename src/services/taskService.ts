@@ -61,6 +61,7 @@ function getTask(taskId: string): PrismaPromise<Task | null> {
     });
 }
 
+// TODO: 同時にchildを正常にattach出来るようにする
 function createTask(taskAddRequset: TaskAddRequest, homeGroupId: string): PrismaPromise<Task> {
     const task = { // TODO: 明示
         display_name: taskAddRequset.name,
