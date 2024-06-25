@@ -1,13 +1,33 @@
 import { PrismaPromise, Task, TaskCompletion } from "@prisma/client";
 import prisma from "@src/prisma";
 
-function getTasks(homeGroupId: string): PrismaPromise<Task[]> {
-    return prisma.task.findMany({
+function getTasks(homeGroupId: string) {
+    const result = prisma.task.findMany({
         where: {
             home_group_id: {
                 equals: homeGroupId
             },
         },
+        include: {
+            TaskChildLinkage: true
+        },
+        select: {
+            id: true,
+            display_name: true,
+            reward: true,
+            TaskChildLinkage: {
+                select: {
+                    child: {
+                        select: {
+                            id: {
+                                select: true,
+                                as: 'child_id'
+                            }
+                        }
+                    }
+                }
+            }
+        }
     });
 }
 
