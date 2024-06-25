@@ -1,5 +1,5 @@
 import prisma from "@src/prisma";
-import { hashSync, compareSync } from "bcryptjs";
+import bcrypt from "bcryptjs";
 import { issueTokenByUserId } from "@src/utils/tokenUtils";
 import { createHomeGroup } from "@src/services/homeGroupService";
 import Logger from "@src/logger";
@@ -9,7 +9,7 @@ logger.setTag('authService');
 
 async function registUser(email: string, password: string, homeGroupId?: string): Promise<String> {
     
-    const hashedPassword = hashSync(password, 10);
+    const hashedPassword = bcrypt.hashSync(password, 10);
 
     if (!homeGroupId) { // TODO: 作成失敗したときにHomeGroupだけ残るのを防ぐ
         logger.info("HomeGroup is not specified, creating new HomeGroup");
@@ -52,7 +52,7 @@ async function loginUser(email: string, password: string): Promise<String | null
     if(!user) {
         return null;
     }
-    if(compareSync(password, user.password)) {
+    if(bcrypt.compareSync(password, user.password)) {
         return issueTokenByUserId(user.id);
     } else {
         return null;
