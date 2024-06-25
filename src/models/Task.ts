@@ -4,11 +4,11 @@ interface TaskBaseItem {
     iconEmoji: String,
     bgColor: String,
     reward: number
-    attached: String[]
 }
 
 interface TaskResponse extends TaskBaseItem {
     // 追加プロパティ
+    attachedChlidren: String[]
 }
 
 interface TaskRequest extends TaskBaseItem {
