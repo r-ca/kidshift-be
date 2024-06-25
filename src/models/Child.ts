@@ -3,6 +3,12 @@ interface ChildBaseItem {
     name: string,
 }
 
+interface ChildDetailsResponse extends ChildBaseItem {
+    // 追加プロパティ
+    createdAt: Date,
+    homeGroupId: string,
+}
+
 interface ChildListResponse {
     list: ChildResponse[]
 }
@@ -19,4 +25,4 @@ interface ChildAddRequest {
     name: string
 }
 
-export { ChildListResponse, ChildResponse, ChildRequest, ChildAddRequest }
+export { ChildListResponse, ChildResponse, ChildRequest, ChildAddRequest, ChildDetailsResponse }
