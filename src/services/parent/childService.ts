@@ -46,41 +46,41 @@ async function getChild(childId: string): Promise<ChildDetailsResponse> {
 }
 
 async function createChild(requestBody: ChildAddRequest, homeGroupId: string): Promise<Child> {
-            const child: Child = {} as Child;
-            child.name = requestBody.name;
-            child.home_group_id = homeGroupId;
-            return prisma.child.create({
-                data: child
-            }).then((child) => { return child; });
-        }
+    const child: Child = {} as Child;
+    child.name = requestBody.name;
+    child.home_group_id = homeGroupId;
+    return prisma.child.create({
+        data: child
+    }).then((child) => { return child; });
+}
 
 async function deleteChild(childId: string): Promise<Child> {
-            return prisma.child.delete({
-                where: {
-                    id: childId
-                }
-            }).then((child) => { return child; });
+    return prisma.child.delete({
+        where: {
+            id: childId
         }
+    }).then((child) => { return child; });
+}
 
 async function generateLoginCode(childId: string): Promise<number> {
-            const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
-            logger.debug(`Generated login code: ${loginCode}`);
-            // cron.schedule('0 0 * * *', () => {
-            //     prisma.activeLoginCode.delete({
-            //         where: {
-            //             code: loginCode
-            //         }
-            //     });
-            // });
-            return prisma.activeLoginCode.create({
-                data: {
-                    child_id: childId,
-                    code: loginCode
-                }
-            }).then((code) => {
-                logger.success(`Login code ${code.code} is generated for child ${childId}`);
-                return code.code;
-            });
+    const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
+    logger.debug(`Generated login code: ${loginCode}`);
+    // cron.schedule('0 0 * * *', () => {
+    //     prisma.activeLoginCode.delete({
+    //         where: {
+    //             code: loginCode
+    //         }
+    //     });
+    // });
+    return prisma.activeLoginCode.create({
+        data: {
+            child_id: childId,
+            code: loginCode
         }
+    }).then((code) => {
+        logger.success(`Login code ${code.code} is generated for child ${childId}`);
+        return code.code;
+    });
+}
 
 export { getChilds, createChild, deleteChild, generateLoginCode, getChild }
