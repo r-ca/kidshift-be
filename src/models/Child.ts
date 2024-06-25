@@ -15,4 +15,8 @@ interface ChildRequest extends ChildBaseItem {
     // 追加プロパティ
 }
 
-export { ChildListResponse, ChildResponse, ChildRequest }
+interface ChildAddRequest {
+    name: string
+}
+
+export { ChildListResponse, ChildResponse, ChildRequest, ChildAddRequest }
