@@ -1,5 +1,5 @@
 import { PrismaPromise, Task, TaskCompletion } from "@prisma/client";
-import { TaskResponse, TaskListResponse } from "@src/models/Task";
+import { TaskResponse, TaskListResponse, TaskAddRequest } from "@src/models/Task";
 import prisma from "@src/prisma";
 
 async function getTasks(homeGroupId: string): Promise<TaskListResponse> {
@@ -61,8 +61,14 @@ function getTask(taskId: string): PrismaPromise<Task | null> {
     });
 }
 
-function createTask(task: Task): PrismaPromise<Task> {
-    return prisma.task.create({ // TODO: Validate task
+function createTask(taskAddRequset: TaskAddRequest, homeGroupId: string): PrismaPromise<Task> {
+    const task = { // TODO: 明示
+        display_name: taskAddRequset.name,
+        reward: taskAddRequset.reward,
+        home_group_id: homeGroupId
+    };
+
+    return prisma.task.create({
         data: task
     });
 }
