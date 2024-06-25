@@ -1,9 +1,9 @@
 // Parent系インタフェース用
 
 interface ParentResponse {
-    id: String,
-    email: String,
-    name: String,
+    id: string,
+    email: string,
+    name: string,
 }
 
 export { ParentResponse }
