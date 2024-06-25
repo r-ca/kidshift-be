@@ -1,8 +1,9 @@
 import { PrismaPromise, Task, TaskCompletion } from "@prisma/client";
+import { TaskResponse, TaskListResponse } from "@src/models/Task";
 import prisma from "@src/prisma";
 
 function getTasks(homeGroupId: string) {
-    const result = prisma.task.findMany({
+    const result = await prisma.task.findMany({
         where: {
             home_group_id: {
                 equals: homeGroupId
@@ -18,7 +19,31 @@ function getTasks(homeGroupId: string) {
                 },
             },
         },
-    });
+    }).then((result) => {
+        const tasks: TaskResponse[] = result.map(task => ({
+            id: task.id,
+            name: task.display_name,
+            reward: task.reward,
+            attachedChlidren: task.TaskChildLinkage.map((linkage) => linkage.child_id),
+        }));
+
+        const response: TaskListResponse = {
+            list: tasks as TaskResponse[]
+        };
+    }
+
+    const tasks = result.map(task => ({
+        id: task.id,
+        display_name: task.display_name,
+        reward: task.reward,
+        attachedChlidren: task.TaskChildLinkage.map((linkage) => linkage.child_id),
+    }));
+
+    const response: TaskListResponse = {
+        list: tasks as TaskResponse[]
+    };
+
+    return response;
 }
 
 function getTasksByChild(childId: string): PrismaPromise<Task[]> {
