@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { Task } from '@prisma/client';
 import { getTask, createTask, getTasks, updateTask, deleteTask, registCompleteTask } from '@src/services/taskService';
+import { TaskListResponse } from '@src/models/Task';
 
 const router = Router();
 
@@ -12,8 +13,8 @@ router.get('/', (req, res) => {
         return;
     }
     getTasks(req.user.claims.home_group_id)
-        .then((tasks: Task[]) => {
-            res.status(200).json(tasks);
+        .then((taskListResponse: TaskListResponse) => {
+            res.status(200).json(taskListResponse);
         })
         .catch((err) => {
             res.status(500).json({
