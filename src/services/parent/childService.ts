@@ -1,17 +1,29 @@
 import { Child, ActiveLoginCode } from '@prisma/client';
 import prisma from '@src/prisma';
+import { ChildListResponse, ChildResponse } from '@src/models/Child';
 import cron from 'node-cron';
 import Logger from '@src/logger';
 
 const logger = new Logger();
 logger.setTag('ChildService');
 
-async function getChilds(homeGroupId: string): Promise<Child[]> {
+async function getChilds(homeGroupId: string): Promise<ChildListResponse> {
     return prisma.child.findMany({
         where: {
             home_group_id: homeGroupId
         }
-    }).then((children) => { return children; });
+    }).then((children) => {
+        const childList: ChildResponse[] = children.map((child) => ({
+            id: child.id,
+            name: child.name
+        }));
+
+        const response: ChildListResponse = {
+            list: childList
+        };
+
+        return response;
+    });
 }
 
 async function createChild(childName: string, homeGroupId: string): Promise<Child> {
