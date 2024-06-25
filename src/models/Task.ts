@@ -11,8 +11,12 @@ interface TaskResponse extends TaskBaseItem {
     attachedChlidren: String[]
 }
 
+interface TaskListResponse {
+    list: TaskBaseItem[]
+}
+
 interface TaskRequest extends TaskBaseItem {
     // 追加プロパティ
 }
 
-export { TaskResponse, TaskRequest }
+export { TaskResponse, TaskRequest, TaskListResponse }
