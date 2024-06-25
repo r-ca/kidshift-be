@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { generateLoginCode, getChilds, createChild, deleteChild } from '@src/services/parent/childService';
+import { generateLoginCode, getChilds, createChild, deleteChild, getChild } from '@src/services/parent/childService';
 import { ChildListResponse } from '@src/models/Child'
 import Logger from '@src/logger';
 
@@ -80,12 +80,12 @@ router.get('/:childId/login', (req: Request, res: Response) => {
     });
 });
 
-router.delete('/:childId', (req: Request, res: Response) => {
-    const childId = req.params.childId; // TODO: Validate childId
-    deleteChild(childId).then((child) => {
+router.get('/:childId', (req: Request, res: Response) => {
+    const childId = req.params.childId;
+    getChild(childId).then((child) => {
         res.status(200).json(child);
     }).catch((err) => {
-        logger.error('Failed to delete child')
+        logger.error('Failed to get child')
         logger.debug(err);
         res.status(500).json({
             message: 'エラーが発生しました',
@@ -93,6 +93,20 @@ router.delete('/:childId', (req: Request, res: Response) => {
         });
     });
 });
+
+router.delete('/:childId', (req: Request, res: Response) => {
+        const childId = req.params.childId; // TODO: Validate childId
+        deleteChild(childId).then((child) => {
+            res.status(200).json(child);
+        }).catch((err) => {
+            logger.error('Failed to delete child')
+            logger.debug(err);
+            res.status(500).json({
+                message: 'エラーが発生しました',
+                detail: err
+            });
+        });
+    });
 
 router.put('/:childId', (req: Request, res: Response) => {
     // 子供情報を更新
