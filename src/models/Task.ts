@@ -17,6 +17,7 @@ interface TaskListResponse {
 
 interface TaskRequest extends TaskBaseItem {
     // 追加プロパティ
+    attachedChlidren?: String[] // タスク追加時にattachするかは任意
 }
 
 export { TaskResponse, TaskRequest, TaskListResponse }
