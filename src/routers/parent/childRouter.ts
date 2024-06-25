@@ -96,8 +96,10 @@ router.get('/:childId', (req: Request, res: Response) => {
 
 router.delete('/:childId', (req: Request, res: Response) => {
         const childId = req.params.childId; // TODO: Validate childId
-        deleteChild(childId).then((child) => {
-            res.status(200).json(child);
+        deleteChild(childId).then(() => {
+            res.status(200).json({
+                "message": "OK"
+            });
         }).catch((err) => {
             logger.error('Failed to delete child')
             logger.debug(err);
