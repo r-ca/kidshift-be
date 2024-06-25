@@ -1,6 +1,6 @@
 interface ChildBaseItem {
-    id: String,
-    name: String,
+    id: string,
+    name: string,
 }
 
 interface ChildListResponse {
