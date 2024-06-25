@@ -25,7 +25,7 @@ router.post('/register', (req: Request, res: Response) => {
 router.post('/login', (req: Request, res: Response) => {
     const { email, password } = req.body;
     loginUser(email, password)
-        .then((token) => {
+        .then((token: String | null) => {
             if (token) {
                 res.status(200).json({
                     "accessToken": token
