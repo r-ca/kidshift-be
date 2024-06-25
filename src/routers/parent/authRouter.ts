@@ -1,6 +1,7 @@
 import { Router, Request, Response } from 'express';
 import { registUser, loginUser } from '@src/services/parent/authService';
 import Logger from '@src/logger';
+import { TokenResponse } from '@src/models/Token';
 
 const router = Router();
 const logger = new Logger();
@@ -9,10 +10,8 @@ logger.setTag('authRouter');
 router.post('/register', (req: Request, res: Response) => {
     const { email, password } = req.body;
     registUser(email, password)
-        .then((token) => {
-            res.json({
-                "accessToken": token
-            });
+        .then((tokenResponse: TokenResponse) => {
+            res.status(201).json(tokenResponse);
         })
         .catch((err) => {
             res.status(401).json({ message: "ユーザー登録失敗: すでに登録されているemailです" });
