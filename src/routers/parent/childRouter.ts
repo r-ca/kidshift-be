@@ -33,8 +33,26 @@ router.post('/', (req: Request, res: Response) => {
         });
     }
     const homeGroupId = req.user.claims.home_group_id;
-    const childName = req.body.name;
-    createChild(childName, homeGroupId).then((child) => {
+    // BodyがChildAddRequestにマッピングできるかチェック
+    let requestBody = null;
+    try {
+        requestBody = req.body;
+        if (!requestBody) {
+            return res.status(400).json({
+                message: 'リクエストボディが不正です'
+            });
+        }
+        if (!requestBody.name) {
+            return res.status(400).json({
+                message: 'nameが不正です'
+            });
+        }
+    } catch (e) {
+        return res.status(400).json({
+            message: 'リクエストボディが不正です'
+        });
+    }
+    createChild(requestBody, homeGroupId).then((child) => {
         res.status(201).json(child);
     }).catch((err) => {
         logger.error('Failed to create child')

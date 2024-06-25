@@ -1,6 +1,6 @@
 import { Child, ActiveLoginCode } from '@prisma/client';
 import prisma from '@src/prisma';
-import { ChildListResponse, ChildResponse } from '@src/models/Child';
+import { ChildAddRequest, ChildListResponse, ChildResponse } from '@src/models/Child';
 import cron from 'node-cron';
 import Logger from '@src/logger';
 
@@ -26,9 +26,9 @@ async function getChilds(homeGroupId: string): Promise<ChildListResponse> {
     });
 }
 
-async function createChild(childName: string, homeGroupId: string): Promise<Child> {
+async function createChild(requestBody: ChildAddRequest, homeGroupId: string): Promise<Child> {
     const child: Child = {} as Child;
-    child.name = childName;
+    child.name = requestBody.name;
     child.home_group_id = homeGroupId;
     return prisma.child.create({
         data: child
