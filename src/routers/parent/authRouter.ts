@@ -10,8 +10,10 @@ logger.setTag('authRouter');
 router.post('/register', (req: Request, res: Response) => {
     const { email, password } = req.body;
     registUser(email, password)
-        .then((tokenResponse: TokenResponse) => {
-            res.status(201).json(tokenResponse);
+        .then((token: String) => {
+            res.status(201).json({
+                "accessToken": token
+            } as TokenResponse);
         })
         .catch((err) => {
             res.status(401).json({ message: "ユーザー登録失敗: すでに登録されているemailです" });
@@ -25,9 +27,9 @@ router.post('/login', (req: Request, res: Response) => {
     loginUser(email, password)
         .then((token) => {
             if (token) {
-                res.json({
+                res.status(200).json({
                     "accessToken": token
-                });
+                } as TokenResponse);
             } else {
                 res.status(401).json({ message: "ログイン失敗: emailかpasswordが間違っています" });
                 logger.warn("Login failed");
