@@ -1,4 +1,4 @@
-interface TaskResponse {
+interface TaskBaseItem {
     id: String,
     name: String,
     iconEmoji: String,
@@ -7,4 +7,12 @@ interface TaskResponse {
     attached: String[]
 }
 
-export { TaskResponse }
+interface TaskResponse extends TaskBaseItem {
+    // 追加プロパティ
+}
+
+interface TaskRequest extends TaskBaseItem {
+    // 追加プロパティ
+}
+
+export { TaskResponse, TaskRequest }
