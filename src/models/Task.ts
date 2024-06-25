@@ -1,8 +1,8 @@
 interface TaskBaseItem {
-    id: String,
-    name: String,
-    iconEmoji: String,
-    bgColor: String,
+    id: string,
+    name: string,
+    iconEmoji?: string,
+    bgColor?: string,
     reward: number
 }
 
