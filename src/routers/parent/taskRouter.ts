@@ -56,9 +56,9 @@ router.post('/', (req, res) => {
         return;
     }
 
-    createTask(task)
+    createTask(requestBody, req.user.claims.home_group_id)
         .then((task: Task) => {
-            res.status(201).json(task);
+            res.status(201).json(task); // TODO
         })
         .catch((err) => {
             res.status(500).json({
