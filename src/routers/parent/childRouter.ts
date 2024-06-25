@@ -1,5 +1,6 @@
 import { Router, Request, Response } from 'express';
 import { generateLoginCode, getChilds, createChild, deleteChild } from '@src/services/parent/childService';
+import { ChildListResponse } from '@src/models/Child'
 import Logger from '@src/logger';
 
 const router = Router();
@@ -13,8 +14,8 @@ router.get('/', (req: Request, res: Response) => {
         });
     }
     const homeGroupId = req.user.claims.home_group_id;
-    getChilds(homeGroupId).then((children) => {
-        res.status(200).json(children);
+    getChilds(homeGroupId).then((childListResponse: ChildListResponse) => {
+        res.status(200).json(childListResponse);
     }).catch((err) => {
         logger.error('Failed to get children')
         logger.debug(err);
