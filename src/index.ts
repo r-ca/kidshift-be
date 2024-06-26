@@ -93,12 +93,12 @@ app.use('/docs', swaggerRouter);
 logger.info("Swagger enabled and mounted at /docs");
 
 
-app.use('/parent', parentRouter, responseLogging);
+app.use('/parent', responseLogging, parentRouter);
 logger.debug("Parent router mounted at /parent");
-app.use('/child', childRouter, responseLogging);
+app.use('/child', responseLogging, childRouter);
 logger.debug("Child router mounted at /child");
-app.use('/debug', debugRouter, responseLogging); // TODO: NODE_ENVに応じてマウントをやめる
-app.use('/meta', metaRouter, responseLogging);
+app.use('/debug', responseLogging, debugRouter); // TODO: NODE_ENVに応じてマウントをやめる
+app.use('/meta', responseLogging, metaRouter);
 logger.debug("Common routes mounted at /meta and /debug");
 logger.success("Routers mounted successfully");
 
