@@ -5,6 +5,7 @@ import metaRouter from "@src/routers/metaRouter";
 import parentRouter from "@src/routers/parent";
 import childRouter from "@src/routers/child";
 import logging from "./routers/middlewares/logging";
+import responseLogging from "./routers/middlewares/responseLogging";
 import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import { Response, Request, Router } from 'express';
@@ -92,12 +93,12 @@ app.use('/docs', swaggerRouter);
 logger.info("Swagger enabled and mounted at /docs");
 
 
-app.use('/parent', parentRouter);
+app.use('/parent', parentRouter, responseLogging);
 logger.debug("Parent router mounted at /parent");
-app.use('/child', childRouter);
+app.use('/child', childRouter, responseLogging);
 logger.debug("Child router mounted at /child");
-app.use('/debug', debugRouter); // TODO: NODE_ENVに応じてマウントをやめる
-app.use('/meta', metaRouter);
+app.use('/debug', debugRouter, responseLogging); // TODO: NODE_ENVに応じてマウントをやめる
+app.use('/meta', metaRouter, responseLogging);
 logger.debug("Common routes mounted at /meta and /debug");
 logger.success("Routers mounted successfully");
 
