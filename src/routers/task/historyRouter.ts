@@ -17,3 +17,5 @@ parentRouter.post("/", (req, res) => {
     res.status(501).send("WIP");
     // TODO: 履歴手動追加
 });
+
+export { parentRouter, commonRouter };
