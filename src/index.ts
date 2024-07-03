@@ -4,6 +4,7 @@ import debugRouter from "@src/routers/debugRouter";
 import metaRouter from "@src/routers/metaRouter";
 import parentRouter from "@src/routers/parent";
 import childRouter from "@src/routers/child";
+import taskRouter from "@src/routers/task";
 import logging from "./routers/middlewares/logging";
 import responseLogging from "./routers/middlewares/responseLogging";
 import os from "os";
@@ -97,6 +98,7 @@ app.use('/parent', responseLogging, parentRouter);
 logger.debug("Parent router mounted at /parent");
 app.use('/child', responseLogging, childRouter);
 logger.debug("Child router mounted at /child");
+app.use('/task', responseLogging, taskRouter);
 app.use('/debug', responseLogging, debugRouter); // TODO: NODE_ENVに応じてマウントをやめる
 app.use('/meta', responseLogging, metaRouter);
 logger.debug("Common routes mounted at /meta and /debug");
