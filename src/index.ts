@@ -99,6 +99,7 @@ logger.debug("Parent router mounted at /parent");
 app.use('/child', responseLogging, childRouter);
 logger.debug("Child router mounted at /child");
 app.use('/task', responseLogging, taskRouter);
+logger.debug("Task router mounted at /task");
 app.use('/debug', responseLogging, debugRouter); // TODO: NODE_ENVに応じてマウントをやめる
 app.use('/meta', responseLogging, metaRouter);
 logger.debug("Common routes mounted at /meta and /debug");
