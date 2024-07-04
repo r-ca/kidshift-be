@@ -1,4 +1,5 @@
-import { MessageResponse } from "./responseBase";
+import { MessageResponse } from "@src/types/messageResponse";
+
 
 const requiredFieldMissingResponse = (field: string[]): MessageResponse => {
     return {
