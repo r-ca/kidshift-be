@@ -11,7 +11,7 @@
         "experimentalDecorators": true,
     },
     "extends": "./tsconfig.paths.json",
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts", "src/*.ts"],
     "ts-node": {
         "esm": true,
         "experimentalSpecifierResolution": "node",
