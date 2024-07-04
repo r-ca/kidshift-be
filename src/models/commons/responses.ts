@@ -31,7 +31,7 @@ const JwtRequiredClaimsMissingResponse = (claims: string[]): MessageResponse => 
     return {
         statusCode: 401,
         body: {
-            message: 'JWTに必要なクレームが不足しています',
+            message: '必要なクレームが不足しています: ' + claims.join(', '),
         },
     };
 }
