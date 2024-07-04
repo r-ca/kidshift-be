@@ -1,5 +1,6 @@
 import jsonwebtoken from "jsonwebtoken";
 import { Request, Response, NextFunction } from "express";
+import { jwtExpiredResponse, jwtVerifyErrorResponse, notPermittedResponse } from "@src/models/commons/responses";
 
 export default function verifyToken(req: Request, res: Response, next: NextFunction) {
     const authorizationHeader = req.headers["authorization"];
@@ -9,10 +10,10 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
         if (token_) {
             token = token_;
         } else {
-            return res.status(401).send("アクセス拒否: アクセストークンが必要なエンドポイントです");
+            return res.status(notPermittedResponse().statusCode).json(notPermittedResponse().body);
         }
     } else {
-        return res.status(401).send("アクセス拒否: アクセストークンが必要なエンドポイントです");
+        return res.status(notPermittedResponse().statusCode).json(notPermittedResponse().body);
     }
     try {
         jsonwebtoken.verify(token, "secret"); // TODO: ハードコードやめる
@@ -24,6 +25,10 @@ export default function verifyToken(req: Request, res: Response, next: NextFunct
         }};
         next();
     } catch (error) {
-        return res.status(401).send("アクセス拒否: トークンの検証に失敗しました(有効期限切れか、不正なトークンです)");
+        if (error instanceof jsonwebtoken.TokenExpiredError) {
+            return res.status(jwtExpiredResponse().statusCode).json(jwtExpiredResponse().body);
+        } else {
+            return res.status(jwtVerifyErrorResponse().statusCode).json(jwtVerifyErrorResponse().body);
+        }
     }
 }
