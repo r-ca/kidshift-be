@@ -7,7 +7,7 @@ import verifyParent from '../middlewares/verifyParent';
 const router = Router();
 
 router.use('/', verifyToken, rootCommonRouter);
-router.use('/' , verifyToken, verifyParent, rootParentRouter);
+router.use('/' , verifyToken, rootParentRouter);
 router.use('/history', verifyToken, historyCommonRouter);
 router.use('/history', verifyToken, historyParentRouter);
 
