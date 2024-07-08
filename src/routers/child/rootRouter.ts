@@ -125,3 +125,5 @@ parentRouter.put('/:childId', (req: Request, res: Response) => {
         res.status(internalServerErrorResponse().statusCode).json(internalServerErrorResponse().body);
     });
 });
+
+export { commonRouter, parentRouter };
