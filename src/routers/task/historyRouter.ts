@@ -11,10 +11,12 @@ commonRouter.get("/:childId", (req, res) => {
     if (!childId) {
         const childIdMissingResponse = requiredFieldMissingResponse(["childId"]);
         res.status(childIdMissingResponse.statusCode).send(childIdMissingResponse.body);
+        return;
     }
     getHistories(childId).then((histories: HistoryResponse[]) => {
         if (!histories || histories.length === 0) {
             res.status(notFoundResponse().statusCode).send(notFoundResponse().body);
+            return;
         }
         res.status(200).send({
             list: histories,
