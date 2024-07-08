@@ -9,7 +9,7 @@ const router = Router();
 router.use('/', verifyToken, rootCommonRouter);
 router.use('/' , verifyToken, verifyParent, rootParentRouter);
 router.use('/history', verifyToken, historyCommonRouter);
-router.use('/history', verifyToken, verifyParent, historyParentRouter);
+router.use('/history', verifyToken, historyParentRouter);
 
 export default router;
 
