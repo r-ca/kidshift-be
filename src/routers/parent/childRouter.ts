@@ -1,7 +1,8 @@
 import { Router, Request, Response } from 'express';
-import { generateLoginCode, getChilds, createChild, deleteChild, getChild } from '@src/services/parent/childService';
+import { generateLoginCode, getChilds, createChild, deleteChild, getChild, modifyChild } from '@src/services/parent/childService';
 import { ChildListResponse } from '@src/models/Child'
 import Logger from '@src/logger';
+import { internalServerErrorResponse } from '@src/models/commons/responses';
 
 const router = Router();
 const logger = new Logger();
@@ -111,9 +112,14 @@ router.delete('/:childId', (req: Request, res: Response) => {
 });
 
 router.put('/:childId', (req: Request, res: Response) => {
-    // 子供情報を更新
-    res.status(501).json({
-        message: 'WIP'
+    const childId = req.params.childId; // TODO: Validate childId
+    // TODO: ボディのバリデーション
+    modifyChild(childId, req.body).then((child) => {
+        res.status(200).json(child);
+    }).catch((err) => {
+        logger.error('Failed to modify child')
+        logger.debug(err);
+        res.status(internalServerErrorResponse().statusCode).json(internalServerErrorResponse().body);
     });
 });
 
