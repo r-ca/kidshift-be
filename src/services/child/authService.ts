@@ -21,7 +21,7 @@ async function login(loginCode: string): Promise<any> { // Workaround
         }
     });
     return {
-        accessToken: issueTokenByChildId(childId),
+        accessToken: await issueTokenByChildId(childId),
         childId: childId
     };
 }
