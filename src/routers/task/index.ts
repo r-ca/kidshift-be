@@ -6,10 +6,10 @@ import verifyParent from '../middlewares/verifyParent';
 
 const router = Router();
 
-router.use('/', verifyToken, rootCommonRouter);
-router.use('/' , verifyToken, rootParentRouter);
 router.use('/history', verifyToken, historyCommonRouter);
-router.use('/history', verifyToken, historyParentRouter);
+router.use('/history', verifyToken, verifyParent, historyParentRouter);
+router.use('/', verifyToken, rootCommonRouter);
+router.use('/' , verifyToken, verifyParent, rootParentRouter);
 
 export default router;
 
