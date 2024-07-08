@@ -1,10 +1,10 @@
 import prisma from '@src/prisma';
 import { issueTokenByChildId } from '@src/utils/tokenUtils';
 
-async function login(loginCode: number): Promise<string | null> {
+async function login(loginCode: string): Promise<string | null> {
     const childId: string | null = await prisma.activeLoginCode.findUnique({
         where: {
-            code: loginCode
+            code: parseInt(loginCode)
         }
             }).then((activeLoginCode) => {
         if (!activeLoginCode) {
@@ -17,7 +17,7 @@ async function login(loginCode: number): Promise<string | null> {
     }
     await prisma.activeLoginCode.delete({
         where: {
-            code: loginCode
+            code: parseInt(loginCode)
         }
     });
     return await issueTokenByChildId(childId);
