@@ -1,7 +1,7 @@
 import prisma from '@src/prisma';
 import { issueTokenByChildId } from '@src/utils/tokenUtils';
 
-async function login(loginCode: string): Promise<string | null> {
+async function login(loginCode: string): Promise<any> { // Workaround
     const childId: string | null = await prisma.activeLoginCode.findUnique({
         where: {
             code: parseInt(loginCode)
@@ -20,7 +20,10 @@ async function login(loginCode: string): Promise<string | null> {
             code: parseInt(loginCode)
         }
     });
-    return await issueTokenByChildId(childId);
+    return {
+        accessToken: issueTokenByChildId(childId),
+        childId: childId
+    };
 }
 
 export { login };
