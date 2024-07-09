@@ -1,13 +1,15 @@
 import { Router, Request, Response } from 'express';
-import { generateLoginCode, getChilds, createChild, deleteChild, getChild } from '@src/services/parent/childService';
+import { generateLoginCode, getChilds, createChild, deleteChild, getChild, modifyChild } from '@src/services/parent/childService';
 import { ChildListResponse } from '@src/models/Child'
 import Logger from '@src/logger';
+import { internalServerErrorResponse } from '@src/models/commons/responses';
 
-const router = Router();
 const logger = new Logger();
-logger.setTag('parent/childRouter');
+const commonRouter = Router();
+const parentRouter = Router();
 
-router.get('/', (req: Request, res: Response) => {
+
+commonRouter.get('/', (req: Request, res: Response) => {
     if (!req.user) {
         return res.status(500).json({
             message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
@@ -26,7 +28,8 @@ router.get('/', (req: Request, res: Response) => {
     });
 });
 
-router.post('/', (req: Request, res: Response) => {
+
+parentRouter.post('/', (req: Request, res: Response) => {
     if (!req.user) {
         return res.status(500).json({
             message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
@@ -64,7 +67,8 @@ router.post('/', (req: Request, res: Response) => {
     });
 });
 
-router.get('/:childId/login', (req: Request, res: Response) => {
+
+parentRouter.get('/:childId/login', (req: Request, res: Response) => {
     const childId = req.params.childId; // TODO: Validate childId
     generateLoginCode(childId).then((code) => {
         res.status(200).json({
@@ -80,7 +84,7 @@ router.get('/:childId/login', (req: Request, res: Response) => {
     });
 });
 
-router.get('/:childId', (req: Request, res: Response) => {
+commonRouter.get('/:childId', (req: Request, res: Response) => {
     const childId = req.params.childId;
     getChild(childId).then((child) => {
         res.status(200).json(child);
@@ -94,7 +98,7 @@ router.get('/:childId', (req: Request, res: Response) => {
     });
 });
 
-router.delete('/:childId', (req: Request, res: Response) => {
+parentRouter.delete('/:childId', (req: Request, res: Response) => {
     const childId = req.params.childId; // TODO: Validate childId
     deleteChild(childId).then(() => {
         res.status(200).json({
@@ -110,11 +114,16 @@ router.delete('/:childId', (req: Request, res: Response) => {
     });
 });
 
-router.put('/:childId', (req: Request, res: Response) => {
-    // 子供情報を更新
-    res.status(501).json({
-        message: 'WIP'
+parentRouter.put('/:childId', (req: Request, res: Response) => {
+    const childId = req.params.childId; // TODO: Validate childId
+    // TODO: ボディのバリデーション
+    modifyChild(childId, req.body).then((child) => {
+        res.status(200).json(child);
+    }).catch((err) => {
+        logger.error('Failed to modify child')
+        logger.debug(err);
+        res.status(internalServerErrorResponse().statusCode).json(internalServerErrorResponse().body);
     });
 });
 
-export default router;
+export { commonRouter, parentRouter };

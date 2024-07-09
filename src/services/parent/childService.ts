@@ -62,6 +62,17 @@ async function deleteChild(childId: string): Promise<Child> {
     }).then((child) => { return child; });
 }
 
+async function modifyChild(childId: string, requestBody: ChildAddRequest): Promise<Child> {
+    return prisma.child.update({
+        where: {
+            id: childId
+        },
+        data: {
+            name: requestBody.name
+        }
+    }).then((child) => { return child; });
+}
+
 async function generateLoginCode(childId: string): Promise<number> {
     const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
     logger.debug(`Generated login code: ${loginCode}`);
@@ -83,4 +94,4 @@ async function generateLoginCode(childId: string): Promise<number> {
     });
 }
 
-export { getChilds, createChild, deleteChild, generateLoginCode, getChild }
+export { getChilds, createChild, deleteChild, generateLoginCode, getChild, modifyChild }
