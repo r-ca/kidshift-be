@@ -27,4 +27,17 @@ async function findChildById(childId: string): Promise<Child> {
     });
 }
 
-export { findUserById, findChildById }
+async function updateParentName(userId: string, name: string): Promise<User> {
+    return await prisma.user.update({
+        where: {
+            id: userId
+        },
+        data: {
+            display_name: name
+        }
+    }).then(user => {
+        return user;
+    });
+}
+
+export { findUserById, findChildById, updateParentName };

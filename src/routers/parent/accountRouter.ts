@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { findUserById } from '@src/utils/userUtils';
+import { findUserById, updateParentName } from '@src/utils/userUtils';
 import Logger from '@src/logger';
 
 const router = Router();
@@ -32,8 +32,19 @@ router.get('/', (req: Request, res: Response) => {
 });
 
 router.put('/', (req: Request, res: Response) => {
-    res.status(501).json({
-        message: 'WIP'
+    const name = req.body.displayName;
+    if (!name) {
+        return res.status(400).json({
+            message: 'displayNameが指定されていません'
+        });
+    }
+    if (!req.user || !req.user.claims || !req.user.claims.sub) {
+        return res.status(500).json({
+            message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
+        });
+    }
+    updateParentName(req.user.claims.sub, name).then(user => {
+        res.status(200).json(user);
     });
 });
 
