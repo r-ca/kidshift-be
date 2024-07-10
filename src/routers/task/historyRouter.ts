@@ -1,8 +1,11 @@
-import { notFoundResponse, requiredFieldMissingResponse } from '@src/models/commons/responses';
+import { internalServerErrorResponse, notFoundResponse, requiredFieldMissingResponse } from '@src/models/commons/responses';
 import { HistoryListResponse, HistoryResponse } from '@src/models/History';
 import { getHistories } from '@src/services/historyService';
 import { Router } from 'express';
+import Logger from '@src/logger'
 
+const logger = new Logger();
+logger.setTag('historyRouter');
 const parentRouter = Router(); // 親専用エンドポイント
 const commonRouter = Router(); // 共用エンドポイント
 
@@ -14,13 +17,12 @@ commonRouter.get("/:childId", (req, res) => {
         return;
     }
     getHistories(childId).then((histories: HistoryResponse[]) => {
-        if (!histories || histories.length === 0) {
-            res.status(notFoundResponse().statusCode).send(notFoundResponse().body);
-            return;
-        }
         res.status(200).send({
             list: histories,
         } as HistoryListResponse);
+    }).catch((err) => {
+        res.status(internalServerErrorResponse().statusCode).send(internalServerErrorResponse().body);
+        logger.error(err.message);
     });
 });
 
