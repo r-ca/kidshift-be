@@ -14,7 +14,7 @@ async function updateUser(user: User): Promise<User> {
     });
 }
 
-async function generateLoginCode(parentId: string): Promise<number> {
+async function generateParentLoginCode(parentId: string): Promise<number> {
     const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
     logger.debug(`Generated login code: ${loginCode}`);
     // cron.schedule('0 0 * * *', () => {
@@ -35,4 +35,4 @@ async function generateLoginCode(parentId: string): Promise<number> {
     });
 }
 
-export { updateUser, generateLoginCode};
+export { updateUser, generateParentLoginCode };
