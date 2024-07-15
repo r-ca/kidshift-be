@@ -5,7 +5,7 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
@@ -15,13 +15,14 @@ datasource db {
 }
 
 model User {
-  id            String    @id @default(cuid())
-  email         String    @unique
-  display_name  String
-  password      String
-  created_at    DateTime  @default(now())
-  home_group_id String
-  home_group    HomeGroup @relation(fields: [home_group_id], references: [id])
+  id                    String                  @id @default(cuid())
+  email                 String                  @unique
+  display_name          String
+  password              String
+  created_at            DateTime                @default(now())
+  home_group_id         String
+  home_group            HomeGroup               @relation(fields: [home_group_id], references: [id])
+  ActiveParentLoginCode ActiveParentLoginCode[]
 }
 
 model HomeGroup {
@@ -80,4 +81,12 @@ model ActiveLoginCode {
   code       Int      @unique
   created_at DateTime @default(now())
   child      Child    @relation(fields: [child_id], references: [id])
+}
+
+model ActiveParentLoginCode {
+  id         String   @id @default(cuid())
+  parent_id  String
+  code       Int      @unique
+  created_at DateTime @default(now())
+  parent     User     @relation(fields: [parent_id], references: [id])
 }
