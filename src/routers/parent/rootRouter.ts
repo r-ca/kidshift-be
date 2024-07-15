@@ -21,3 +21,5 @@ parentRouter.get('/issue', (req: Request, res: Response) => {
         res.status(500).json({ message: "ログインコードの発行に失敗しました" });
     });
 });
+
+export { parentRouter, commonRouter };
