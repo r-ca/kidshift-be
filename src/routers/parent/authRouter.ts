@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { registUser, loginUser } from '@src/services/parent/authService';
+import { registUser, loginUser, loginUserWithCode } from '@src/services/parent/authService';
 import Logger from '@src/logger';
 import { TokenResponse } from '@src/models/Token';
 
@@ -23,6 +23,28 @@ router.post('/register', (req: Request, res: Response) => {
 });
 
 router.post('/login', (req: Request, res: Response) => {
+    // フィールドにcodeがあるか確認
+    if (req.body.code) {
+        // codeがある場合はcodeでログイン
+        const { code } = req.body;
+        loginUserWithCode(code)
+            .then((token: String | null) => {
+                if (token) {
+                    res.status(200).json({
+                        "accessToken": token
+                    } as TokenResponse);
+                } else {
+                    res.status(401).json({ message: "ログイン失敗: codeが間違っています" });
+                    logger.warn("Login failed");
+                }
+            })
+            .catch((err) => {
+                res.status(500).json({ message: "ログイン失敗: サーバーエラー" });
+                logger.error("Login failed");
+                logger.debug(err.message);
+            });
+        return;
+    }
     const { email, password } = req.body;
     loginUser(email, password)
         .then((token: String | null) => {
