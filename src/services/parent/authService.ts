@@ -60,5 +60,20 @@ async function loginUser(email: string, password: string): Promise<String | null
     }
 }
 
+async function loginUserWithCode(code: string): Promise<String | null> {
+    const parentUser = await prisma.activeParentLoginCode.findUnique({
+        where: {
+            code: parseInt(code)
+        }
+    });
+    if (!parentUser) {
+        return null;
+    }
+    return issueTokenByUserId(parentUser.parent_id);
+}
 
-export { registUser, loginUser };
+
+
+
+
+export { registUser, loginUser, loginUserWithCode }
