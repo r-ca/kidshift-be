@@ -26,6 +26,7 @@ router.post('/login', (req: Request, res: Response) => {
     // フィールドにcodeがあるか確認
     if (req.body.code) {
         // codeがある場合はcodeでログイン
+        logger.info("Login with code");
         const { code } = req.body;
         loginUserWithCode(code)
             .then((token: String | null) => {
