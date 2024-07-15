@@ -72,8 +72,4 @@ async function loginUserWithCode(code: string): Promise<String | null> {
     return issueTokenByUserId(parentUser.parent_id);
 }
 
-
-
-
-
 export { registUser, loginUser, loginUserWithCode }
