@@ -84,20 +84,6 @@ parentRouter.get('/:childId/login', (req: Request, res: Response) => {
     });
 });
 
-commonRouter.get('/:childId', (req: Request, res: Response) => {
-    const childId = req.params.childId;
-    getChild(childId).then((child) => {
-        res.status(200).json(child);
-    }).catch((err) => {
-        logger.error('Failed to get child')
-        logger.debug(err);
-        res.status(500).json({
-            message: 'エラーが発生しました',
-            detail: err
-        });
-    });
-});
-
 commonRouter.get('/me', (req: Request, res: Response) => {
     if (!req.user) {
         return res.status(500).json({
@@ -110,6 +96,20 @@ commonRouter.get('/me', (req: Request, res: Response) => {
         });
     }
     const childId = req.user.claims.sub;
+    getChild(childId).then((child) => {
+        res.status(200).json(child);
+    }).catch((err) => {
+        logger.error('Failed to get child')
+        logger.debug(err);
+        res.status(500).json({
+            message: 'エラーが発生しました',
+            detail: err
+        });
+    });
+});
+
+commonRouter.get('/:childId', (req: Request, res: Response) => {
+    const childId = req.params.childId;
     getChild(childId).then((child) => {
         res.status(200).json(child);
     }).catch((err) => {
