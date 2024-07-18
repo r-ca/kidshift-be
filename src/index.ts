@@ -11,6 +11,7 @@ import os from "os";
 import { getCommitHash, getCommitMessage } from "@utils/gitMeta";
 import { Response, Request, Router } from 'express';
 import prisma from '@src/prisma';
+import cors from 'cors';
 // Swagger
 import swaggerUi from 'swagger-ui-express';
 import swaggerJSDoc from 'swagger-jsdoc';
@@ -58,12 +59,13 @@ logger.info("JSON parser enabled");
 app.use(logging);
 logger.info("Logging middleware enabled");
 // !For debug only!
-app.use((_req: Request, res: Response, next: NextFunction) => {
-    res.header("Access-Control-Allow-Origin", "*");
-    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization");
-    res.header("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
-    next();
-});
+const corsOptions = {
+    origin: '*',
+    methos: "GET, POST, PUT, DELETE, OPTIONS",
+    optionsSuccessStatus: 200
+}
+app.use(cors(corsOptions));
+
 logger.warn("CORS allowed for all origins !For debug only!");
 
 logger.success("Configuration applied successfully");
