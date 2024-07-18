@@ -98,6 +98,30 @@ commonRouter.get('/:childId', (req: Request, res: Response) => {
     });
 });
 
+commonRouter.get('/me', (req: Request, res: Response) => {
+    if (!req.user) {
+        return res.status(500).json({
+            message: 'エラーが発生しました(JWT解析結果が不正/未設定です)'
+        });
+    }
+    if (!req.user.claims.role || req.user.claims.role === 'parent') {
+        return res.status(403).json({
+            message: '子供ユーザー用のAPIです' // TODO: レスポンス共通化, もうちょっとわかりやすくする
+        });
+    }
+    const childId = req.user.claims.sub;
+    getChild(childId).then((child) => {
+        res.status(200).json(child);
+    }).catch((err) => {
+        logger.error('Failed to get child')
+        logger.debug(err);
+        res.status(500).json({
+            message: 'エラーが発生しました',
+            detail: err
+        });
+    });
+});
+
 parentRouter.delete('/:childId', (req: Request, res: Response) => {
     const childId = req.params.childId; // TODO: Validate childId
     deleteChild(childId).then(() => {
