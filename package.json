@@ -14,8 +14,10 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^5.15.1",
+    "@types/cors": "^2.8.17",
     "bcryptjs": "^2.4.3",
     "chalk": "^5.3.0",
+    "cors": "^2.8.5",
     "express": "^4.19.2",
     "inversify": "^6.0.2",
     "jsonwebtoken": "^9.0.2",
