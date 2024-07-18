@@ -15,7 +15,7 @@ async function updateUser(user: User): Promise<User> {
 }
 
 async function generateParentLoginCode(parentId: string): Promise<number> {
-    const loginCode: number = Math.floor(10000000 + Math.random() * 90000000);
+    const loginCode: number = Math.floor(Math.random() * 10000);
     logger.debug(`Generated login code: ${loginCode}`);
     // cron.schedule('0 0 * * *', () => {
     //     prisma.activeLoginCode.delete({
