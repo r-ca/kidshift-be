@@ -1,4 +1,4 @@
-import express from "express";
+import express, { NextFunction } from "express";
 import Logger from "@src/logger";
 import debugRouter from "@src/routers/debugRouter";
 import metaRouter from "@src/routers/metaRouter";
@@ -57,6 +57,14 @@ app.use(express.json());
 logger.info("JSON parser enabled");
 app.use(logging);
 logger.info("Logging middleware enabled");
+// !For debug only!
+app.use((_req: Request, res: Response, next: NextFunction) => {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+logger.warn("CORS allowed for all origins !For debug only!");
+
 logger.success("Configuration applied successfully");
 
 // connect db
