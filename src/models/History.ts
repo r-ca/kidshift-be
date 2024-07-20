@@ -3,6 +3,7 @@ interface HistoryBaseItem {
     childId: string,
     taskId: string,
     registeredAt: Date,
+    isPaid: boolean,
 }
 
 interface HistoryResponse extends HistoryBaseItem {
