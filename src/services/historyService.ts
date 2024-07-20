@@ -1,7 +1,7 @@
 import { HistoryResponse } from "@src/models/History";
 import prisma from "@src/prisma";
 
-async function getHistories(childId: string): Promise<HistoryResponse[]> {
+async function getHistories(childId: string, containPaid: boolean): Promise<HistoryResponse[]> {
     return prisma.taskCompletion.findMany({
         where: {
             child_id: childId,

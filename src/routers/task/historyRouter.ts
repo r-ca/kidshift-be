@@ -11,14 +11,13 @@ const commonRouter = Router(); // 共用エンドポイント
 
 commonRouter.get("/:childId", (req, res) => {
     const containPaid = req.query.containPaid === "true";
-
     const childId = req.params.childId;
     if (!childId) {
         const childIdMissingResponse = requiredFieldMissingResponse(["childId"]);
         res.status(childIdMissingResponse.statusCode).send(childIdMissingResponse.body);
         return;
     }
-    getHistories(childId).then((histories: HistoryResponse[]) => {
+    getHistories(childId, containPaid).then((histories: HistoryResponse[]) => {
         res.status(200).send({
             list: histories,
         } as HistoryListResponse);
