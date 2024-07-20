@@ -5,88 +5,89 @@
 // Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
 
 generator client {
-  provider      = "prisma-client-js"
-  binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
+    provider      = "prisma-client-js"
+    binaryTargets = ["native", "linux-musl-openssl-3.0.x"]
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model User {
-  id                    String                  @id @default(cuid())
-  email                 String                  @unique
-  display_name          String
-  password              String
-  created_at            DateTime                @default(now())
-  home_group_id         String
-  home_group            HomeGroup               @relation(fields: [home_group_id], references: [id])
-  ActiveParentLoginCode ActiveParentLoginCode[]
+    id                    String                  @id @default(cuid())
+    email                 String                  @unique
+    display_name          String
+    password              String
+    created_at            DateTime                @default(now())
+    home_group_id         String
+    home_group            HomeGroup               @relation(fields: [home_group_id], references: [id])
+    ActiveParentLoginCode ActiveParentLoginCode[]
 }
 
 model HomeGroup {
-  id         String   @id @default(cuid())
-  name       String
-  created_at DateTime @default(now())
-  User       User[]
-  Child      Child[]
-  Task       Task[]
+    id         String   @id @default(cuid())
+    name       String
+    created_at DateTime @default(now())
+    User       User[]
+    Child      Child[]
+    Task       Task[]
 }
 
 model Task {
-  id               String             @id @default(cuid())
-  display_name     String
-  iconEmoji        String?
-  bg_color         String?
-  home_group_id    String
-  home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
-  created_at       DateTime           @default(now())
-  reward           Int
-  TaskCompletion   TaskCompletion[]
-  TaskChildLinkage TaskChildLinkage[]
+    id               String             @id @default(cuid())
+    display_name     String
+    iconEmoji        String?
+    bg_color         String?
+    home_group_id    String
+    home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
+    created_at       DateTime           @default(now())
+    reward           Int
+    TaskCompletion   TaskCompletion[]
+    TaskChildLinkage TaskChildLinkage[]
 }
 
 model Child {
-  id               String             @id @default(cuid())
-  name             String
-  created_at       DateTime           @default(now())
-  home_group_id    String
-  home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
-  TaskCompletion   TaskCompletion[]
-  TaskChildLinkage TaskChildLinkage[]
-  ActiveLoginCode  ActiveLoginCode[]
+    id               String             @id @default(cuid())
+    name             String
+    created_at       DateTime           @default(now())
+    home_group_id    String
+    home_group       HomeGroup          @relation(fields: [home_group_id], references: [id])
+    TaskCompletion   TaskCompletion[]
+    TaskChildLinkage TaskChildLinkage[]
+    ActiveLoginCode  ActiveLoginCode[]
 }
 
 model TaskCompletion {
-  id           String   @id @default(cuid())
-  task_id      String
-  child_id     String
-  registerd_at DateTime @default(now())
-  child        Child    @relation(fields: [child_id], references: [id])
-  task         Task     @relation(fields: [task_id], references: [id])
+    id           String   @id @default(cuid())
+    task_id      String
+    child_id     String
+    registerd_at DateTime @default(now())
+    child        Child    @relation(fields: [child_id], references: [id])
+    task         Task     @relation(fields: [task_id], references: [id])
+    is_paid      Boolean  @default(false)
 }
 
 model TaskChildLinkage {
-  id       String @id @default(cuid())
-  task_id  String
-  child_id String
-  task     Task   @relation(fields: [task_id], references: [id])
-  child    Child  @relation(fields: [child_id], references: [id])
+    id       String @id @default(cuid())
+    task_id  String
+    child_id String
+    task     Task   @relation(fields: [task_id], references: [id])
+    child    Child  @relation(fields: [child_id], references: [id])
 }
 
 model ActiveLoginCode {
-  id         String   @id @default(cuid())
-  child_id   String
-  code       Int      @unique
-  created_at DateTime @default(now())
-  child      Child    @relation(fields: [child_id], references: [id])
+    id         String   @id @default(cuid())
+    child_id   String
+    code       Int      @unique
+    created_at DateTime @default(now())
+    child      Child    @relation(fields: [child_id], references: [id])
 }
 
 model ActiveParentLoginCode {
-  id         String   @id @default(cuid())
-  parent_id  String
-  code       Int      @unique
-  created_at DateTime @default(now())
-  parent     User     @relation(fields: [parent_id], references: [id])
+    id         String   @id @default(cuid())
+    parent_id  String
+    code       Int      @unique
+    created_at DateTime @default(now())
+    parent     User     @relation(fields: [parent_id], references: [id])
 }
