@@ -5,6 +5,7 @@ async function getHistories(childId: string, containPaid: boolean): Promise<Hist
     return prisma.taskCompletion.findMany({
         where: {
             child_id: childId,
+            ...(containPaid ? {} : { is_paid: false }),
         },
     }).then((histories) => {
         if (!histories) {
@@ -15,7 +16,8 @@ async function getHistories(childId: string, containPaid: boolean): Promise<Hist
                 id: history.id,
                 childId: history.child_id,
                 taskId: history.task_id,
-                registeredAt: history.registerd_at
+                registeredAt: history.registerd_at,
+                isPaid: history.is_paid,
             };
         });
     });
