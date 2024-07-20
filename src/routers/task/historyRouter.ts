@@ -10,6 +10,8 @@ const parentRouter = Router(); // 親専用エンドポイント
 const commonRouter = Router(); // 共用エンドポイント
 
 commonRouter.get("/:childId", (req, res) => {
+    const containPaid = req.query.containPaid === "true";
+
     const childId = req.params.childId;
     if (!childId) {
         const childIdMissingResponse = requiredFieldMissingResponse(["childId"]);
@@ -31,7 +33,7 @@ parentRouter.delete("/:historyId", (req, res) => {
     // TODO: 履歴削除
 });
 
-parentRouter.post("/", (req, res) => {
+parentRouter.patch("/:childId/:historyId", (req, res) => {
     res.status(501).send("WIP");
     // TODO: 履歴手動追加
 });
