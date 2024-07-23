@@ -7,6 +7,9 @@ async function getHistories(childId: string, containPaid: boolean): Promise<Hist
             child_id: childId,
             ...(containPaid ? {} : { is_paid: false }),
         },
+        orderBy: {
+            registerd_at: "desc",
+        },
     }).then((histories) => {
         if (!histories) {
             return [];
