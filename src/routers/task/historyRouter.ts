@@ -1,6 +1,6 @@
 import { internalServerErrorResponse, notFoundResponse, requiredFieldMissingResponse } from '@src/models/commons/responses';
 import { HistoryListResponse, HistoryResponse } from '@src/models/History';
-import { getHistories } from '@src/services/historyService';
+import { getHistories, updateHistoryPaidStatus } from '@src/services/historyService';
 import { Router } from 'express';
 import Logger from '@src/logger'
 
@@ -32,9 +32,17 @@ parentRouter.delete("/:historyId", (req, res) => {
     // TODO: 履歴削除
 });
 
-parentRouter.patch("/:childId/:historyId", (req, res) => {
-    res.status(501).send("WIP");
-    // TODO: 履歴手動追加
+parentRouter.post("/:historyId/paid", (req, res) => {
+    const isPaid = req.query.isPaid === "true";
+    const historyId = req.params.historyId;
+    if (!historyId) {
+        const historyIdMissingResponse = requiredFieldMissingResponse(["historyId"]);
+        res.status(historyIdMissingResponse.statusCode).send(historyIdMissingResponse.body);
+        return;
+    }
+    updateHistoryPaidStatus(historyId, isPaid).then(() => {
+        res.status(200).send(); // TODO: 固定値化
+    });
 });
 
 export { parentRouter, commonRouter };

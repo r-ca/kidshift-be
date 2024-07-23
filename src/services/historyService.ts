@@ -23,4 +23,15 @@ async function getHistories(childId: string, containPaid: boolean): Promise<Hist
     });
 }
 
-export { getHistories };
+async function updateHistoryPaidStatus(historyId: string, isPaid: boolean): Promise<void> {
+    await prisma.taskCompletion.update({
+        where: {
+            id: historyId,
+        },
+        data: {
+            is_paid: isPaid,
+        },
+    });
+}
+
+export { getHistories, updateHistoryPaidStatus }
