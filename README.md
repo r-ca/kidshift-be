@@ -20,6 +20,7 @@ docker compose up -d
 - IDEによってはgitignoreに不足がある
 - 依存関係の整理が不十分で、devDependenciesにあるべきものがdependenciesに含まれている
 - ディレクトリ構成が不適切なままになっている部分がある
+- 発行から一定期間が経過したログインコードを無効にする処理が実装されていない
 
 ### 関連
 - [KidShift Webフロントエンド](https://ns1b-gitea.nem.one/kidshift/kidshift-web)
